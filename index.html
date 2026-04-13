@@ -105,6 +105,1491 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--dark);min-h
 .lcard.mno{border-color:var(--red);background:var(--red-light);}
 .icard{border:3px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;text-align:center;padding:5px 4px;background:white;}
 .icard:hover,.icard.sel{border-color:var(--blue);transform:scale(1.03);}
+.icard.mok{border-color:var(--green);background:var(--green-light);cursor:default;transform:none!important;}
+.lcard.mok{border-color:var(--green)!important;background:var(--green-light)!important;cursor:default!important;}
+.matched-flash{animation:matchPop .4s ease;}
+@keyframes matchPop{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+.icard.mno{border-color:var(--red);background:var(--red-light);animation:redflash .7s ease;}
+@keyframes redflash{0%,100%{transform:scale(1)}30%{transform:scale(1.05)}}
+.icard img{width:100%;height:72px;object-fit:cover;border-radius:5px;}
+.icard .ifb{font-size:.62rem;color:var(--gray);margin-top:3px;line-height:1.2;}
+.fsel{padding:3px 7px;border:2px solid var(--blue);border-radius:6px;font-family:'Heebo',sans-serif;font-size:.83rem;background:var(--blue-light);cursor:pointer;margin:0 2px;}
+.fsel.ok2{border-color:var(--green);background:var(--green-light);}
+.fsel.no2{border-color:var(--red);background:var(--red-light);}
+.fsel:disabled{opacity:.85;cursor:default;}
+.finp{border:none;border-bottom:2px solid var(--gold);min-width:80px;padding:2px 4px;background:transparent;font-family:'Heebo',sans-serif;font-size:.9rem;}
+.finp:focus{outline:none;border-bottom-color:var(--blue);}
+.finp.ok2{border-bottom-color:var(--green);background:var(--green-light);border-radius:4px;}
+.finp.no2{border-bottom-color:var(--red);background:var(--red-light);border-radius:4px;}
+.finp:disabled{opacity:.85;}
+.wchip{display:inline-block;background:white;border:1px solid var(--border);border-radius:6px;padding:3px 10px;font-size:.81rem;font-weight:600;}
+@media(max-width:600px){.igrid{grid-template-columns:repeat(3,1fr);}.clist{grid-template-columns:1fr;}.header-title{font-size:1rem;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-title">🕯️ יום השואה – עבודה אינטראקטיבית</div>
+  <div class="score-badge" id="gScore">ציון: 0</div>
+</div>
+<div class="progress-wrap">
+  <div class="progress-label"><span>התקדמות כללית</span><span id="pText">0%</span></div>
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="pFill"></div></div>
+</div>
+<div class="tabs">
+  <button class="tab-btn active" data-tab="tab1" onclick="switchTab('tab1')"><span>חלק א׳ – זיכרון</span><span class="tc">✓</span></button>
+  <button class="tab-btn" data-tab="tab2" onclick="switchTab('tab2')"><span>חלק ב׳ – סבתא שרה</span><span class="tc">✓</span></button>
+  <button class="tab-btn" data-tab="tab3" onclick="switchTab('tab3')"><span>חלק ג׳ – השואה</span><span class="tc">✓</span></button>
+  <button class="tab-btn" data-tab="tab4" onclick="switchTab('tab4')"><span>חלק ד׳ – Had To</span><span class="tc">✓</span></button>
+  <button class="tab-btn" data-tab="tab5" onclick="switchTab('tab5')"><span>⭐ תג הגבורה</span><span class="tc">✓</span></button>
+</div>
+<div class="content">
+
+<!-- TAB 1 -->
+<div class="tab-panel active" id="tab1">
+  <div class="phase active" id="ph-look">
+    <div class="card">
+      <div class="stitle">🧠 משחק הזיכרון / Memory Game</div>
+      <div class="hnote">📋 הסתכלו על התמונות 30 שניות ונסו לזכור כמה שיותר.<br><strong>Look at the pictures for 30 seconds. Try to remember as many items as possible.</strong></div>
+      <div class="tdisp" id="timer">00:30</div>
+      <div class="igrid">
+        <div class="iemoji">🫖<span>Teapot</span></div><div class="iemoji">🎸<span>Guitar</span></div>
+        <div class="iemoji">👕<span>T-Shirt</span></div><div class="iemoji">🎒<span>Backpack</span></div>
+        <div class="iemoji">🚒<span>Firetruck</span></div><div class="iemoji">🦆<span>Duck</span></div>
+        <div class="iemoji">📷<span>Camera</span></div><div class="iemoji">🚲<span>Bike</span></div>
+        <div class="iemoji">🪥<span>Toothbrush</span></div><div class="iemoji">📗<span>Book</span></div>
+        <div class="iemoji">☕<span>Mug</span></div><div class="iemoji">🐑<span>Sheep</span></div>
+        <div class="iemoji">✉️<span>Envelope</span></div><div class="iemoji">🧦<span>Sock</span></div>
+        <div class="iemoji">🌵<span>Cactus</span></div><div class="iemoji">👓<span>Glasses</span></div>
+      </div>
+      <div style="text-align:center;margin-top:12px;">
+        <button class="btn btn-p" id="startBtn" onclick="startTimer()">▶ התחל / Start</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" id="ph-select">
+    <div class="card">
+      <div class="stitle">✅ מה זכרתם? / What do you remember?</div>
+      <div class="hnote">📋 סמנו את כל הפריטים שהיו בתמונה.<br><strong>Mark all items that were in the picture.</strong></div>
+      <div id="mAttempt" class="atag">ניסיון 1 מתוך 2</div>
+      <div class="clist" id="clist"></div>
+      <button class="btn btn-p" id="checkMemBtn" style="margin-top:12px;" onclick="checkMem()">בדוק תשובות ✓</button>
+      <div class="rbox" id="memRes"></div>
+    </div>
+  </div>
+
+  <div class="phase" id="ph-reflect">
+    <div class="card">
+      <div class="stitle">💭 חשבו על המשחק / Think about the memory game</div>
+      <div style="font-weight:700;margin-bottom:8px;">How easy was it to remember? <span style="font-size:.82rem;color:var(--gray);">/ כמה היה קל לזכור?</span></div>
+      <div id="r1A" class="atag">ניסיון 1 מתוך 2</div>
+      <div class="rrow">
+        <span class="rlbl">👎 Hard</span>
+        <button class="rbtn" data-r="1" onclick="selRating(1)">1</button>
+        <button class="rbtn" data-r="2" onclick="selRating(2)">2</button>
+        <button class="rbtn" data-r="3" onclick="selRating(3)">3</button>
+        <button class="rbtn" data-r="4" onclick="selRating(4)">4</button>
+        <button class="rbtn" data-r="5" onclick="selRating(5)">5</button>
+        <span class="rlbl">Easy 👍</span>
+      </div>
+      <button class="btn btn-p" style="margin-top:8px;" onclick="subRating()">שלח</button>
+      <div class="rbox" id="ratingRes"></div>
+      <hr class="divider">
+      <div style="font-weight:700;margin-bottom:8px;">Do you think you have a good memory? <span style="font-size:.82rem;color:var(--gray);">/ האם יש לכם זיכרון טוב?</span></div>
+      <div id="r2A" class="atag">ניסיון 1 מתוך 2</div>
+      <div class="olist" id="gmOpts">
+        <div class="oi" onclick="selGM('yes',this)"><div class="rdot"></div>Yes / כן</div>
+        <div class="oi" onclick="selGM('no',this)"><div class="rdot"></div>No / לא</div>
+      </div>
+      <button class="btn btn-p" onclick="subGM()">שלח</button>
+      <div class="rbox" id="gmRes"></div>
+      <hr class="divider">
+      <div style="font-weight:700;margin-bottom:8px;">Name two things you <span style="color:var(--green);">remember easily</span>:</div>
+      <input type="text" class="tinp" id="easy1" placeholder="דבר ראשון / First thing">
+      <input type="text" class="tinp" id="easy2" placeholder="דבר שני / Second thing">
+      <div style="font-weight:700;margin-bottom:8px;margin-top:6px;">Name two things you <span style="color:var(--red);">don't always remember</span>:</div>
+      <input type="text" class="tinp" id="hard1" placeholder="דבר ראשון / First thing">
+      <input type="text" class="tinp" id="hard2" placeholder="דבר שני / Second thing">
+      <hr class="divider">
+      <div style="font-weight:700;margin-bottom:8px;">What helps you remember? <span style="font-size:.82rem;color:var(--gray);">/ מה עוזר לכם לזכור?</span></div>
+      <div id="r5A" class="atag">ניסיון 1 מתוך 2</div>
+      <div class="olist" id="helpOpts">
+        <div class="oi" onclick="togHelp(this,'repeat')"><div class="rdot"></div>Repeating it out loud / לחזור בקול</div>
+        <div class="oi" onclick="togHelp(this,'ask')"><div class="rdot"></div>Asking someone to remind me / לבקש ממישהו</div>
+        <div class="oi" onclick="togHelp(this,'phone')"><div class="rdot"></div>Putting a reminder on my phone / תזכורת בטלפון</div>
+        <div class="oi" onclick="togHelp(this,'write')"><div class="rdot"></div>Writing things down / לכתוב</div>
+        <div class="oi" onclick="togHelp(this,'other')"><div class="rdot"></div>אחר / Other</div>
+      </div>
+      <button class="btn btn-p" style="margin-top:8px;" onclick="subHelp()">שלח</button>
+      <div class="rbox" id="helpRes"></div>
+    </div>
+    <div class="ssbox" id="ss1">
+      <div>ציון חלק א׳</div><div class="ssbig" id="ss1n">--</div>
+      <div id="ss1l" style="font-size:.9rem;opacity:.8;margin-top:4px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2 -->
+<div class="tab-panel" id="tab2">
+  <div class="card" style="text-align:center;background:linear-gradient(135deg,#1a1a2e,#2d3748);color:white;">
+    <div style="font-size:2.5rem;margin-bottom:8px;">📷</div>
+    <div style="font-family:'Fredoka One',cursive;font-size:1.8rem;color:#fbbf24;">Savta Sara and Itamar</div>
+    <div style="font-size:.9rem;opacity:.7;margin-top:4px;">סבתא שרה ואיתמר</div>
+  </div>
+  <!-- Warm-up -->
+  <div class="card">
+    <div class="stitle">📖 משימת פתיחה / Warm-Up</div>
+    <div class="ssub">Read the conversation and highlight the <strong style="background:#bfdbfe;padding:1px 5px;border-radius:4px;">people</strong> and <strong style="background:#bbf7d0;padding:1px 5px;border-radius:4px;">places</strong> they talk about.</div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;font-size:.82rem;font-weight:600;">
+      <span style="background:#bfdbfe;padding:2px 7px;border-radius:5px;">👤 Person</span>
+      <span style="background:#bbf7d0;padding:2px 7px;border-radius:5px;">📍 Place</span>
+      <span style="color:var(--gray);font-size:.76rem;">לחצו על מילה לבחירת קטגוריה</span>
+    </div>
+    <div class="dlg" id="dlgA">
+      <p><span class="ss">Safta Sara:</span> Oh look, it's my friend <span class="hw-wrap" onclick="cycleHL(this)"><span class="hw-badge"></span><span class="hw-word">Rachel</span></span> from <span class="hw-wrap" onclick="cycleHL(this)"><span class="hw-badge"></span><span class="hw-word">Amsterdam</span></span> in <span class="hw-wrap" onclick="cycleHL(this)"><span class="hw-badge"></span><span class="hw-word">Holland</span></span>. That's the same place where <span class="hw-wrap" onclick="cycleHL(this)"><span class="hw-badge"></span><span class="hw-word">Anne Frank</span></span> lived.</p>
+      <br><p><span class="si">Itamar:</span> <span class="hw-wrap" onclick="cycleHL(this)"><span class="hw-badge"></span><span class="hw-word">Anne Frank</span></span>? Who's that?</p>
+      <br><p><span class="ss">Safta Sara:</span> Well, <span class="hw-wrap" onclick="cycleHL(this)"><span class="hw-badge"></span><span class="hw-word">Anne</span></span> was a Jewish girl, like us. During the Holocaust — a time when the Nazis wanted to "hurt" Jewish people — she and her family hid in a secret attic behind a bookcase to stay safe. She wrote about her life in a diary.</p>
+      <br><p><span class="si">Itamar:</span> A secret attic? That sounds really scary.</p>
+      <br><p><span class="ss">Safta Sara:</span> Yes, it was. They had to sit quietly and they had to be careful. Sadly, the Nazis found them and took them away. But her diary survived, which helps us learn about her life and remember what happened. In her words, we see her hopes, fears, and daily life.</p>
+      <br><p><span class="si">Itamar:</span> I mean, I don't get it. Why did they have to hide?</p>
+      <br><p><span class="ss">Safta Sara:</span> Because the Nazis were taking Jewish people to concentration camps. This went on in many places, such as <span class="hw-wrap" onclick="cycleHL(this)"><span class="hw-badge"></span><span class="hw-word">Amsterdam</span></span>, where <span class="hw-wrap" onclick="cycleHL(this)"><span class="hw-badge"></span><span class="hw-word">Anne</span></span> and my friend grew up.</p>
+      <br><p><span class="si">Itamar:</span> Oh man, that's so sad.</p>
+      <br><p><span class="ss">Safta Sara:</span> It is. That's why we say 'Never Again.' We want to make sure such bad things don't happen to Jewish people — or anyone — ever again. We remember to stay strong and keep <span class="hw-wrap" onclick="cycleHL(this)"><span class="hw-badge"></span><span class="hw-word">Israel</span></span> safe.</p>
+      <br><p><span class="si">Itamar:</span> So, remembering helps us stay strong?</p>
+      <br><p><span class="ss">Safta Sara:</span> Exactly, my dear. By remembering, we honor those who suffered and promise to protect each other, like a big family.</p>
+    </div>
+    <style>
+      /* Tap-to-cycle highlight: none → person (blue) → place (green) → none */
+      .hw-wrap{display:inline-flex;align-items:center;gap:0;border-radius:6px;cursor:pointer;
+               padding:2px 4px;transition:all .15s;border:2px solid transparent;}
+      .hw-wrap:hover{border-color:var(--blue);background:#fef9c3;}
+      .hw-wrap.hperson{background:#bfdbfe;border-color:#93c5fd;}
+      .hw-wrap.hplace{background:#bbf7d0;border-color:#6ee7b7;}
+      .hw-word{font-weight:600;}
+      .hw-badge{display:none;font-size:.68rem;font-weight:700;padding:1px 5px;border-radius:10px;
+                margin-right:4px;white-space:nowrap;}
+      .hw-wrap.hperson .hw-badge{display:inline;background:#1e40af;color:white;content:'👤 Person';}
+      .hw-wrap.hplace  .hw-badge{display:inline;background:#065f46;color:white;}
+      /* hide the old picker spans entirely */
+      .hw-picker{display:none!important;}
+    </style>
+    <div style="margin-top:10px;font-size:.78rem;color:var(--gray);">💡 משימה זו היא לפתיחה בלבד – אינה מנוקדת.</div>
+  </div>
+  <!-- Comp -->
+  <div class="card">
+    <div class="stitle">❓ הבנת הנקרא / Reading Comprehension</div>
+    <div class="ssub">What do we learn about Anne Frank from Safta Sara? Check all correct answers.<br><span style="font-size:.83rem;color:var(--gray);">מה למדנו על אנה פרנק? סמנו את כל התשובות הנכונות.</span></div>
+    <div id="compA" class="atag">ניסיון 1 מתוך 2</div>
+    <div style="font-weight:700;margin-bottom:10px;">We learn: / אנחנו לומדים:</div>
+    <div id="compOpts">
+      <div class="cop" data-id="born" onclick="togComp(this)"><div class="cbx"></div>where Anne Frank was born. / איפה נולדה.</div>
+      <div class="cop" data-id="wrote" onclick="togComp(this)"><div class="cbx"></div>what Anne Frank wrote in her diary. / מה כתבה ביומן.</div>
+      <div class="cop" data-id="why" onclick="togComp(this)"><div class="cbx"></div>why she had to hide in the attic. / למה נאלצה להתחבא.</div>
+      <div class="cop" data-id="whywrote" onclick="togComp(this)"><div class="cbx"></div>why Anne Frank wrote in her diary. / למה כתבה ביומן.</div>
+      <div class="cop" data-id="grewup" onclick="togComp(this)"><div class="cbx"></div>where Anne Frank grew up. / איפה גדלה.</div>
+    </div>
+    <button class="btn btn-p" style="margin-top:12px;" onclick="checkComp()">בדוק ✓</button>
+    <div class="rbox" id="compRes"></div>
+  </div>
+  <!-- Vocab 1 -->
+  <div class="card">
+    <div class="stitle">🔤 Vocabulary Focus – חלק א׳</div>
+    <div class="ssub">התאימו כל ביטוי עברי לתרגום האנגלי שלו. / Match each Hebrew phrase to its English translation.</div>
+    <div id="vA" class="atag">ניסיון 1 מתוך 2</div>
+    <table class="mtbl"><thead><tr><th>English</th><th>עברית – בחרו</th></tr></thead><tbody id="vBody"></tbody></table>
+    <button class="btn btn-p" onclick="checkVocab()">בדוק ✓</button>
+    <div class="rbox" id="vRes"></div>
+  </div>
+  <!-- Match 12 -->
+  <div class="card">
+    <div class="stitle">🔤 Vocabulary Focus – חלק ב׳</div>
+    <div class="ssub">התאימו את 12 המילים המודגשות לפירושים בעברית. / Match the 12 highlighted words to Hebrew translations.</div>
+    <div class="dlg" style="margin-bottom:14px;font-size:.87rem;">
+      <p><span class="si">Itamar:</span> I mean, <span class="vhl">(1) I don't get it.</span> Why did they have to hide?</p><br>
+      <p><span class="ss">Safta Sara:</span> Because the Nazis were taking Jewish people to <span class="vhl">(2) concentration camps</span>. This went on in many places, such as Amsterdam, where Anne and my friend <span class="vhl">(3) grew up</span>.</p><br>
+      <p><span class="si">Itamar:</span> Oh man, that's so sad.</p><br>
+      <p><span class="ss">Safta Sara:</span> It is. That's why we say <span class="vhl">(4) 'Never Again'</span>. We want to <span class="vhl">(5) make sure</span> such bad things don't happen to Jewish people—or anyone—ever again. We remember to <span class="vhl">(6) stay strong</span> and keep Israel <span class="vhl">(7) safe</span>.</p><br>
+      <p><span class="si">Itamar:</span> So, remembering helps us stay strong?</p><br>
+      <p><span class="ss">Safta Sara:</span> <span class="vhl">(8) Exactly</span>, my dear. By remembering, we <span class="vhl">(9) honor</span> those who <span class="vhl">(10) suffered</span> and <span class="vhl">(11) promise</span> to <span class="vhl">(12) protect</span> each other, like a big family.</p>
+    </div>
+    <div id="mA" class="atag">ניסיון 1 מתוך 2</div>
+    <table class="mtbl"><thead><tr><th>English</th><th>עברית – בחרו</th></tr></thead><tbody id="mBody"></tbody></table>
+    <button class="btn btn-p" onclick="checkMatch()">בדוק ✓</button>
+    <div class="rbox" id="mRes"></div>
+  </div>
+  <div class="ssbox" id="ss2">
+    <div>ציון חלק ב׳</div><div class="ssbig" id="ss2n">--</div>
+    <div id="ss2l" style="font-size:.9rem;opacity:.8;margin-top:4px;"></div>
+  </div>
+</div>
+
+<!-- TAB 3 -->
+<div class="tab-panel" id="tab3">
+  <div class="card" style="text-align:center;background:linear-gradient(135deg,#1a1a2e,#2d3748);color:white;">
+    <div style="font-size:2rem;margin-bottom:6px;">🕯️</div>
+    <div style="font-family:'Fredoka One',cursive;font-size:2rem;color:#fbbf24;">THE HOLOCAUST</div>
+    <div style="font-size:.88rem;opacity:.7;margin-top:4px;">השואה</div>
+  </div>
+  <!-- A: img match -->
+  <div class="card">
+    <div class="stitle">🖼️ התאמת תמונות / Match the Pictures</div>
+    <div class="ssub">Match the pictures to their descriptions. / התאימו תמונות לתיאורים.</div>
+    <div class="hnote">📋 <b>איך משחקים:</b> לחצו על תיאור (שמאל) → יצבע בכחול → לחצו על התמונה המתאימה (ימין). זוג נכון = ירוק! זוג שגוי = אדום, נסו תמונה אחרת.<br>
+    <b>How to play:</b> Click a label (left) → it turns blue → click the matching picture (right). Correct = green! Wrong = red, try another picture.</div>
+    <div id="imgA" class="atag">ניסיון 1 מתוך 2</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px;">
+      <div><div style="font-weight:700;text-align:center;margin-bottom:8px;font-size:.82rem;color:var(--gray);">Group A – תיאורים</div><div id="imgL" style="display:flex;flex-direction:column;gap:7px;"></div></div>
+      <div><div style="font-weight:700;text-align:center;margin-bottom:8px;font-size:.82rem;color:var(--gray);">Group B – תמונות</div><div id="imgP" style="display:grid;grid-template-columns:1fr 1fr;gap:7px;"></div></div>
+    </div>
+    <!-- match is now automatic, button only as fallback -->
+    <div class="rbox" id="imgRes"></div>
+  </div>
+  <!-- B: heb-eng -->
+  <div class="card">
+    <div class="stitle">📚 אוצר מילים – התאמה / Vocabulary Match</div>
+    <div class="ssub">התאימו מילים לפירושים. יש מילה אחת מיותרת בעברית. / Match words. There is one extra Hebrew word.</div>
+    <div id="heA" class="atag">ניסיון 1 מתוך 2</div>
+    <table class="mtbl"><thead><tr><th>English</th><th>עברית – בחרו</th></tr></thead><tbody id="heBody"></tbody></table>
+    <button class="btn btn-p" onclick="checkHE()">בדוק ✓</button>
+    <div class="rbox" id="heRes"></div>
+  </div>
+  <!-- C: translate -->
+  <div class="card">
+    <div class="stitle">🔄 תרגום לאנגלית / Translate into English</div>
+    <div class="ssub">תרגמו לאנגלית. השתמשו בבנק התשובות. / Translate into English using the word bank.</div>
+    <div id="ehA" class="atag">ניסיון 1 מתוך 2</div>
+    <div style="background:var(--gold-light);border:1px solid var(--gold);border-radius:10px;padding:10px 14px;margin-bottom:12px;">
+      <div style="font-weight:700;font-size:.82rem;margin-bottom:6px;">בנק תשובות:</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;" id="ehBank"></div>
+    </div>
+    <table class="mtbl"><thead><tr><th style="width:50%;">עברית</th><th>English – בחרו</th></tr></thead><tbody id="ehBody"></tbody></table>
+    <button class="btn btn-p" onclick="checkEH()">בדוק ✓</button>
+    <div class="rbox" id="ehRes"></div>
+  </div>
+  <!-- D: fill blanks -->
+  <div class="card">
+    <div class="stitle">✏️ השלמת משפטים / Fill in the Blanks</div>
+    <div class="ssub">קראו את הטקסט שוב והשלימו מילים מהבנק. / Read the text again. Fill in words from the bank.</div>
+    <div style="background:var(--gold-light);border:1px solid var(--gold);border-radius:10px;padding:10px 14px;margin-bottom:12px;">
+      <div style="font-weight:700;font-size:.82rem;margin-bottom:6px;">בנק תשובות:</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <span class="wchip">survived</span><span class="wchip">sounds really scary</span><span class="wchip">sit quietly</span>
+        <span class="wchip">Holocaust</span><span class="wchip">safe</span><span class="wchip">daily</span>
+        <span class="wchip">fears</span><span class="wchip">diary</span><span class="wchip">careful</span>
+        <span class="wchip">hurt</span><span class="wchip">secret attic</span>
+      </div>
+    </div>
+    <div id="fillA" class="atag">ניסיון 1 מתוך 2</div>
+    <div id="fillDiv" class="dlg" style="line-height:2.6;"></div>
+    <button class="btn btn-p" style="margin-top:12px;" onclick="checkFill()">בדוק ✓</button>
+    <div class="rbox" id="fillRes"></div>
+  </div>
+  <!-- E: fix words -->
+  <div class="card">
+    <div class="stitle">🔧 תקנו המילים השבורות / Fix the Broken Words</div>
+    <div class="ssub">השלימו את המילים "השבורות". / Complete the broken words.</div>
+    <div id="fixA" class="atag">ניסיון 1 מתוך 2</div>
+    <div id="fixDiv" class="dlg" style="line-height:2.8;"></div>
+    <button class="btn btn-p" style="margin-top:12px;" onclick="checkFix()">בדוק ✓</button>
+    <div class="rbox" id="fixRes"></div>
+  </div>
+  <!-- F: pairs -->
+  <div class="card">
+    <div class="stitle">✍️ זוגות מילים / Word Pairs</div>
+    <div class="ssub">השלימו את המשפטים עם זוגות המילים. המילים יכולות להופיע בכל סדר.<br>Complete sentences using word pairs. Words can be in any order.</div>
+    <div style="background:var(--blue-light);border:1px solid var(--blue);border-radius:10px;padding:10px 14px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:10px;font-size:.82rem;font-weight:600;">
+      <span>Holocaust – hide</span><span>•</span><span>Never again – honor</span><span>•</span>
+      <span>diary – secret attic</span><span>•</span><span>stay strong – promise</span><span>•</span>
+      <span>suffer – survived</span><span>•</span><span>keep safe – protect</span>
+    </div>
+    <div id="pairsA" class="atag">ניסיון 1 מתוך 2</div>
+    <div id="pairsDiv" style="display:flex;flex-direction:column;gap:12px;margin-top:8px;"></div>
+    <button class="btn btn-p" style="margin-top:12px;" onclick="checkPairs()">בדוק ✓</button>
+    <div class="rbox" id="pairsRes"></div>
+  </div>
+  <!-- G: write own -->
+  <div class="card">
+    <div class="stitle">🖊️ כתיבה חופשית / Write Your Own</div>
+    <div class="ssub">Choose at least two words from the exercise and write your own sentence(s).<br><span style="font-size:.83rem;color:var(--gray);">בחרו לפחות שתי מילים מהתרגיל וכתבו משפט משלכם.</span></div>
+    <textarea class="tinp" id="wo1" rows="2" placeholder="משפט ראשון / Sentence 1..." style="resize:vertical;"></textarea>
+    <button onclick="addWS()" style="background:var(--blue-light);border:1px solid var(--blue);padding:7px 14px;border-radius:8px;cursor:pointer;font-family:Heebo,sans-serif;font-size:.85rem;color:var(--blue);font-weight:600;">+ הוסף משפט</button>
+    <div id="extraWS"></div>
+  </div>
+  <!-- H: think -->
+  <div class="card">
+    <div class="stitle">💡 חשבו ומצאו / Think and Find</div>
+    <div class="ssub">Think and find as many answers as you can. / חשבו ומצאו כמה שיותר תשובות.</div>
+    <div id="thinkA" class="atag">ניסיון 1 מתוך 2</div>
+    <div style="overflow-x:auto;margin-bottom:12px;">
+      <table style="width:100%;border-collapse:collapse;font-size:.87rem;">
+        <thead><tr style="background:var(--blue);color:white;">
+          <th style="padding:9px 14px;text-align:right;border:1px solid var(--border);">Question</th>
+          <th style="padding:9px 14px;text-align:right;border:1px solid var(--border);">Your answers:</th>
+        </tr></thead>
+        <tbody>
+          <tr><td style="padding:9px 14px;border:1px solid var(--border);">We write in a diary.<br><em style="color:var(--blue);font-size:.8rem;">What else do we write in?</em></td>
+          <td style="padding:5px;border:1px solid var(--border);"><textarea class="tinp" id="th1" rows="2" style="margin:0;resize:vertical;font-size:.83rem;" placeholder="תשובה שלי..."></textarea></td></tr>
+          <tr><td style="padding:9px 14px;border:1px solid var(--border);">We light a candle to honor and remember.<br><em style="color:var(--blue);font-size:.8rem;">What else do we do to remember?</em></td>
+          <td style="padding:5px;border:1px solid var(--border);"><textarea class="tinp" id="th2" rows="2" style="margin:0;resize:vertical;font-size:.83rem;" placeholder="תשובה שלי..."></textarea></td></tr>
+          <tr><td style="padding:9px 14px;border:1px solid var(--border);">We talk to people who need help.<br><em style="color:var(--blue);font-size:.8rem;">How else can we help?</em></td>
+          <td style="padding:5px;border:1px solid var(--border);"><textarea class="tinp" id="th3" rows="2" style="margin:0;resize:vertical;font-size:.83rem;" placeholder="תשובה שלי..."></textarea></td></tr>
+          <tr><td style="padding:9px 14px;border:1px solid var(--border);">We say "Stay strong" to help others.<br><em style="color:var(--blue);font-size:.8rem;">What else can we say?</em></td>
+          <td style="padding:5px;border:1px solid var(--border);"><textarea class="tinp" id="th4" rows="2" style="margin:0;resize:vertical;font-size:.83rem;" placeholder="תשובה שלי..."></textarea></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn btn-p" onclick="subThink()">שלח / Submit</button>
+    <div class="rbox" id="thinkRes"></div>
+    <div id="thinkBank" style="display:none;margin-top:18px;">
+      <div style="font-weight:700;margin-bottom:5px;">Let's try again! Use the word bank – 3 correct answers per question:</div>
+      <div style="background:var(--gold-light);border:1px solid var(--gold);border-radius:10px;padding:10px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:6px;">
+        <span class="wchip">journal</span><span class="wchip">Notebook</span><span class="wchip">blog</span>
+        <span class="wchip">Visit a memorial</span><span class="wchip">look at old photos</span><span class="wchip">say a prayer</span>
+        <span class="wchip">give a hug</span><span class="wchip">Listen</span><span class="wchip">Stay safe</span>
+        <span class="wchip">Be careful</span><span class="wchip">be kind</span><span class="wchip">Take care</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;" id="thinkGrid"></div>
+      <button class="btn btn-p" style="margin-top:12px;" onclick="subThink2()">שלח סופי / Final Submit</button>
+      <div class="rbox" id="thinkRes2"></div>
+    </div>
+  </div>
+  <div class="ssbox" id="ss3">
+    <div>ציון חלק ג׳</div><div class="ssbig" id="ss3n">--</div>
+    <div id="ss3l" style="font-size:.9rem;opacity:.8;margin-top:4px;"></div>
+    <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.2);">
+      <div style="font-size:.85rem;opacity:.7;margin-bottom:6px;">ציון כולל / Total Score:</div>
+      <div style="font-family:'Fredoka One',cursive;font-size:2.5rem;color:#fbbf24;" id="totalFinal">--</div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4 -->
+<div class="tab-panel" id="tab4">
+  <div class="card" style="text-align:center;background:linear-gradient(135deg,#0c4a6e,#0369a1);color:white;">
+    <div style="font-size:2rem;margin-bottom:6px;">📝</div>
+    <div style="font-family:'Fredoka One',cursive;font-size:2rem;color:#7dd3fc;letter-spacing:1px;">HAD TO</div>
+    <div style="font-size:.88rem;opacity:.7;margin-top:4px;">היה צריך / נאלץ</div>
+  </div>
+
+  <!-- Grammar box -->
+  <div class="card" style="border:2px solid #bae6fd;">
+    <div class="stitle" style="color:#0369a1;">📖 Grammar Point</div>
+    <div style="font-size:.95rem;line-height:1.8;margin-bottom:12px;">
+      <div style="margin-bottom:8px;">Anne Frank's family <strong>had to</strong> hide in the attic.</div>
+      <div>Grandma says they <strong>had to</strong> sit quietly and they <strong><u>had to</u></strong> be careful.</div>
+    </div>
+    <div style="background:#e0f2fe;border:1px solid #7dd3fc;border-radius:10px;padding:14px 18px;text-align:center;font-size:.92rem;">
+      <strong><u>Had to</u></strong> shows that something was <strong><u>necessary</u></strong> in the past.<br>
+      You <strong>had to</strong> do something (in the past) because you had <strong><u>no choice.</u></strong>
+    </div>
+  </div>
+
+  <!-- Task A: fill with verb -->
+  <div class="card">
+    <div class="stitle">✏️ Complete the sentences with the verb that fits best.</div>
+    <div class="ssub">You have more verbs than you need.<br><span style="font-size:.83rem;color:var(--gray);">השלימו את המשפטים עם הפועל המתאים ביותר. יש לכם יותר פעלים ממה שתצטרכו.</span></div>
+    <div id="t4aAttempt" class="atag">ניסיון 1 מתוך 2</div>
+    <div style="display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start;">
+      <div style="display:flex;flex-direction:column;gap:14px;font-size:.93rem;" id="t4aDiv">
+        <div>1. I had to <select class="fsel" id="t4a_0" onchange="S.t4aAns[0]=this.value;SS()"><option value="">___</option></select> early yesterday.</div>
+        <div>2. Sorry I was busy yesterday. I had to <select class="fsel" id="t4a_1" onchange="S.t4aAns[1]=this.value;SS()"><option value="">___</option></select> my exam.</div>
+        <div>3. I had to <select class="fsel" id="t4a_2" onchange="S.t4aAns[2]=this.value;SS()"><option value="">___</option></select> the bus for 30 minutes.</div>
+        <div>4. We had to <select class="fsel" id="t4a_3" onchange="S.t4aAns[3]=this.value;SS()"><option value="">___</option></select> new shoes because the old ones were too small.</div>
+        <div>5. She had to <select class="fsel" id="t4a_4" onchange="S.t4aAns[4]=this.value;SS()"><option value="">___</option></select> to school because she missed the bus.</div>
+      </div>
+      <div style="background:var(--gold-light);border:1px solid var(--gold);border-radius:10px;padding:12px;min-width:130px;">
+        <div style="font-weight:700;font-size:.82rem;margin-bottom:8px;text-align:center;">בנק תשובות</div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:.83rem;">
+          <span class="wchip">studied</span><span class="wchip">bought</span>
+          <span class="wchip">walk</span><span class="wchip">buy</span>
+          <span class="wchip">study for</span><span class="wchip">wait for</span>
+          <span class="wchip">get up</span><span class="wchip">waited for</span>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-p" style="margin-top:14px;" onclick="checkT4a()">בדוק ✓</button>
+    <div class="rbox" id="t4aRes"></div>
+  </div>
+
+  <!-- Task B: Holocaust had to fill -->
+  <div class="card">
+    <div class="stitle">🕯️ What did people/Jews have to do during and after the Holocaust?</div>
+    <div class="ssub">Fill in the gaps: / השלימו את המילים החסרות</div>
+    <div id="t4bAttempt" class="atag">ניסיון 1 מתוך 2</div>
+    <div style="display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start;">
+      <div style="display:flex;flex-direction:column;gap:16px;font-size:.93rem;" id="t4bDiv">
+        <div>Many Jews had to <select class="fsel" id="t4b_0" onchange="S.t4bAns[0]=this.value;SS()"><option value="">___</option></select> Europe.</div>
+        <div>Families had to <select class="fsel" id="t4b_1" onchange="S.t4bAns[1]=this.value;SS()"><option value="">___</option></select> in secret places to stay safe.</div>
+        <div>They had to stay strong <select class="fsel" id="t4b_2" onchange="S.t4bAns[2]=this.value;SS()"><option value="">___</option></select> when the times were hard.</div>
+        <div>Some people had to change their names to <select class="fsel" id="t4b_3" onchange="S.t4bAns[3]=this.value;SS()"><option value="">___</option></select> themselves.</div>
+        <div>Survivors had to learn to live with painful <select class="fsel" id="t4b_4" onchange="S.t4bAns[4]=this.value;SS()"><option value="">___</option></select>.</div>
+      </div>
+      <div style="background:var(--gold-light);border:1px solid var(--gold);border-radius:10px;padding:12px;min-width:120px;">
+        <div style="font-weight:700;font-size:.82rem;margin-bottom:8px;text-align:center;">בנק תשובות</div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:.83rem;">
+          <span class="wchip">memories</span><span class="wchip">protect</span>
+          <span class="wchip">even</span><span class="wchip">escape</span>
+          <span class="wchip">hide</span>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-p" style="margin-top:14px;" onclick="checkT4b()">בדוק ✓</button>
+    <div class="rbox" id="t4bRes"></div>
+  </div>
+
+  <!-- Task C: Match beginnings to endings -->
+  <div class="card">
+    <div class="stitle">🔗 Let's see if you remember – match the beginning of the sentences with the end.</div>
+    <div class="ssub">בואו נראה אם אתם זוכרים – השלימו את התחלת המשפט עם הסוף שלו</div>
+    <div id="t4cAttempt" class="atag">ניסיון 1 מתוך 2</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px;">
+      <div>
+        <div style="font-weight:700;text-align:center;margin-bottom:8px;font-size:.82rem;color:var(--gray);">Group A</div>
+        <div id="t4cGroupA" style="display:flex;flex-direction:column;gap:8px;"></div>
+      </div>
+      <div>
+        <div style="font-weight:700;text-align:center;margin-bottom:8px;font-size:.82rem;color:var(--gray);">Group B</div>
+        <div id="t4cGroupB" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"></div>
+      </div>
+    </div>
+    <button class="btn btn-p" style="margin-top:14px;" onclick="checkT4c()">Submit ✓</button>
+    <div class="rbox" id="t4cRes"></div>
+  </div>
+
+  <!-- Task D: Word order sentences -->
+  <div class="card">
+    <div class="stitle">🔀 Put the words in the correct order to make sentences.</div>
+    <div class="ssub">These sentences describe life during the Holocaust.<br><span style="font-size:.83rem;color:var(--gray);">סדרו את המילים לפי הסדר הנכון, ליצירת משפטים תקינים.</span></div>
+    <div id="t4dAttempt" class="atag">ניסיון 1 מתוך 2</div>
+    <div id="t4dDiv" style="display:flex;flex-direction:column;gap:20px;margin-top:10px;"></div>
+    <button class="btn btn-p" style="margin-top:14px;" onclick="checkT4d()">Submit ✓</button>
+    <div class="rbox" id="t4dRes"></div>
+  </div>
+
+  <div class="ssbox" id="ss4">
+    <div>ציון חלק ד׳</div><div class="ssbig" id="ss4n">--</div>
+    <div id="ss4l" style="font-size:.9rem;opacity:.8;margin-top:4px;"></div>
+    <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.2);">
+      <div style="font-size:.85rem;opacity:.7;margin-bottom:6px;">ציון כולל / Total Score:</div>
+      <div style="font-family:'Fredoka One',cursive;font-size:2.5rem;color:#fbbf24;" id="totalFinal4">--</div>
+    </div>
+  </div>
+
+
+
+</div><!-- /tab4 -->
+
+<!-- TAB 5 -->
+<div class="tab-panel" id="tab5">
+  <!-- Task E: Survivor's Badge Creator -->
+  <div class="card" style="margin-top:20px;">
+    <div class="stitle">⭐ Survivor's Badge / תג הגבורה</div>
+    <div style="font-size:.93rem;line-height:1.7;margin-bottom:10px;">
+      <strong>Jews in Europe had to wear a yellow star on their clothes to mark that they were Jews.</strong><br>
+      <strong>Create a badge of honor to remember the Jews in the Holocaust and how they tried to survive!</strong>
+    </div>
+    <div style="font-size:.82rem;color:var(--gray);margin-bottom:14px;">צרו תג של כבוד לזכר היהודים בשואה וגבורתם.</div>
+
+    <!-- Keyword chips -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px;">
+      <div style="background:#dbeafe;border:1px solid #93c5fd;border-radius:8px;padding:10px;text-align:center;font-weight:800;font-size:.82rem;letter-spacing:.5px;">STAY STRONG</div>
+      <div style="background:#dbeafe;border:1px solid #93c5fd;border-radius:8px;padding:10px;text-align:center;font-weight:800;font-size:.82rem;letter-spacing:.5px;">SURVIVE</div>
+      <div style="background:#dbeafe;border:1px solid #93c5fd;border-radius:8px;padding:10px;text-align:center;font-weight:800;font-size:.82rem;letter-spacing:.5px;">NEVER AGAIN</div>
+      <div style="background:#dbeafe;border:1px solid #93c5fd;border-radius:8px;padding:10px;text-align:center;font-weight:800;font-size:.82rem;letter-spacing:.5px;">TO HONOR</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;">
+      <!-- Controls -->
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div>
+          <label style="font-size:.83rem;font-weight:700;display:block;margin-bottom:5px;">🎨 Badge color / צבע התג:</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;" id="colorPicker">
+            <button onclick="setBadgeColor('#fbbf24','#92400e')" style="width:32px;height:32px;background:#fbbf24;border:2px solid #92400e;border-radius:50%;cursor:pointer;"></button>
+            <button onclick="setBadgeColor('#60a5fa','#1e3a8a')" style="width:32px;height:32px;background:#60a5fa;border:2px solid #1e3a8a;border-radius:50%;cursor:pointer;"></button>
+            <button onclick="setBadgeColor('#34d399','#065f46')" style="width:32px;height:32px;background:#34d399;border:2px solid #065f46;border-radius:50%;cursor:pointer;"></button>
+            <button onclick="setBadgeColor('#f87171','#7f1d1d')" style="width:32px;height:32px;background:#f87171;border:2px solid #7f1d1d;border-radius:50%;cursor:pointer;"></button>
+            <button onclick="setBadgeColor('#c4b5fd','#4c1d95')" style="width:32px;height:32px;background:#c4b5fd;border:2px solid #4c1d95;border-radius:50%;cursor:pointer;"></button>
+            <button onclick="setBadgeColor('#f9a8d4','#831843')" style="width:32px;height:32px;background:#f9a8d4;border:2px solid #831843;border-radius:50%;cursor:pointer;"></button>
+          </div>
+        </div>
+        <div>
+          <label style="font-size:.83rem;font-weight:700;display:block;margin-bottom:5px;">🌟 Choose a symbol / בחרו סמל:</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;" id="symbolPicker">
+            <button onclick="setBadgeSymbol('✡️')" style="font-size:1.4rem;background:white;border:2px solid var(--border);border-radius:8px;padding:4px 8px;cursor:pointer;">✡️</button>
+            <button onclick="setBadgeSymbol('🕊️')" style="font-size:1.4rem;background:white;border:2px solid var(--border);border-radius:8px;padding:4px 8px;cursor:pointer;">🕊️</button>
+            <button onclick="setBadgeSymbol('🕯️')" style="font-size:1.4rem;background:white;border:2px solid var(--border);border-radius:8px;padding:4px 8px;cursor:pointer;">🕯️</button>
+            <button onclick="setBadgeSymbol('💪')" style="font-size:1.4rem;background:white;border:2px solid var(--border);border-radius:8px;padding:4px 8px;cursor:pointer;">💪</button>
+            <button onclick="setBadgeSymbol('📖')" style="font-size:1.4rem;background:white;border:2px solid var(--border);border-radius:8px;padding:4px 8px;cursor:pointer;">📖</button>
+            <button onclick="setBadgeSymbol('❤️')" style="font-size:1.4rem;background:white;border:2px solid var(--border);border-radius:8px;padding:4px 8px;cursor:pointer;">❤️</button>
+            <button onclick="setBadgeSymbol('🌟')" style="font-size:1.4rem;background:white;border:2px solid var(--border);border-radius:8px;padding:4px 8px;cursor:pointer;">🌟</button>
+            <button onclick="setBadgeSymbol('🌿')" style="font-size:1.4rem;background:white;border:2px solid var(--border);border-radius:8px;padding:4px 8px;cursor:pointer;">🌿</button>
+          </div>
+        </div>
+        <div>
+          <label style="font-size:.83rem;font-weight:700;display:block;margin-bottom:5px;">📝 Choose 2 words for your badge / בחרו 2 מילים:</label>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;" id="wordPicker">
+            <button onclick="toggleBadgeWord(this,'STAY STRONG')" style="padding:5px 10px;border:2px solid var(--border);border-radius:8px;cursor:pointer;font-family:Heebo,sans-serif;font-size:.8rem;font-weight:700;background:white;">STAY STRONG</button>
+            <button onclick="toggleBadgeWord(this,'SURVIVE')" style="padding:5px 10px;border:2px solid var(--border);border-radius:8px;cursor:pointer;font-family:Heebo,sans-serif;font-size:.8rem;font-weight:700;background:white;">SURVIVE</button>
+            <button onclick="toggleBadgeWord(this,'NEVER AGAIN')" style="padding:5px 10px;border:2px solid var(--border);border-radius:8px;cursor:pointer;font-family:Heebo,sans-serif;font-size:.8rem;font-weight:700;background:white;">NEVER AGAIN</button>
+            <button onclick="toggleBadgeWord(this,'TO HONOR')" style="padding:5px 10px;border:2px solid var(--border);border-radius:8px;cursor:pointer;font-family:Heebo,sans-serif;font-size:.8rem;font-weight:700;background:white;">TO HONOR</button>
+          </div>
+        </div>
+        <div>
+          <label style="font-size:.83rem;font-weight:700;display:block;margin-bottom:5px;">✍️ Your name on the badge / שמך על התג:</label>
+          <input type="text" class="tinp" id="badgeName" placeholder="Your name..." oninput="renderBadge()" style="margin:0;font-size:.88rem;">
+        </div>
+      </div>
+
+      <!-- Badge preview -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        <div style="font-size:.82rem;font-weight:700;color:var(--gray);">תצוגה מקדימה / Preview:</div>
+        <canvas id="badgeCanvas" width="220" height="220" style="border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.15);"></canvas>
+        <button onclick="saveBadge()" class="btn btn-p" style="font-size:.85rem;padding:8px 18px;">💾 שמור תמונה / Save Image</button>
+      </div>
+    </div>
+
+    <!-- Reflection -->
+    <hr class="divider" style="margin:18px 0;">
+    <div style="font-weight:700;font-size:.95rem;margin-bottom:8px;">💬 Comment on a friend's badge:</div>
+    <div style="font-size:.88rem;color:var(--gray);margin-bottom:10px;">Describe what you see and say why you think your friend chose these images.<br><span style="font-size:.82rem;">תארו מה אתם רואים ואמרו מדוע לדעתכם בחר חברכם בסמלים אלה.</span></div>
+    <textarea class="tinp" id="badgeComment" rows="3" placeholder="My friend's badge shows... I think they chose... because..." style="resize:vertical;" oninput="S.badgeComment=this.value;SS()"></textarea>
+    <button class="btn btn-p" onclick="subBadgeComment()" style="margin-top:8px;font-size:.88rem;">שלח / Submit</button>
+    <div class="rbox" id="badgeComRes"></div>
+  </div>
+
+</div><!-- /tab5 -->
+
+</div><!-- /content -->
+<script>
+// ============= DATA =============
+const MEM_CORRECT=['teapot','guitar','tshirt','backpack','firetruck','duck','camera','bike','toothbrush','book','mug','sheep','envelope','sock','cactus','glasses'];
+const MEM_ALL=[
+  {id:'backpack',l:'Backpack 🎒'},{id:'banana',l:'Banana 🍌'},{id:'bike',l:'Bike 🚲'},
+  {id:'book',l:'Book 📗'},{id:'cactus',l:'Cactus 🌵'},{id:'camera',l:'Camera 📷'},
+  {id:'calculator',l:'Calculator 🧮'},{id:'chair',l:'Chair 🪑'},
+  {id:'duck',l:'Duck 🦆'},{id:'envelope',l:'Envelope ✉️'},{id:'firetruck',l:'Firetruck 🚒'},
+  {id:'football',l:'Football ⚽'},{id:'glasses',l:'Glasses 👓'},{id:'guitar',l:'Guitar 🎸'},
+  {id:'mug',l:'Mug ☕'},{id:'scissors',l:'Scissors ✂️'},{id:'sheep',l:'Sheep 🐑'},
+  {id:'sock',l:'Sock 🧦'},{id:'teapot',l:'Teapot 🫖'},{id:'toothbrush',l:'Toothbrush 🪥'},
+  {id:'tshirt',l:'T-Shirt 👕'}
+];
+const COMP_OK=['wrote','why','grewup'];
+const VP=[
+  {e:'the same place',h:'אותו מקום'},{e:'sit quietly',h:'לשבת בשקט'},
+  {e:"Who's that?",h:'מי זה\\זאת?'},{e:'hid',h:'הסתתר(ו)'},
+  {e:'careful',h:'זהיר(ים)'},{e:'the Holocaust',h:'שואה'},
+  {e:'secret attic',h:'עליית-גג סודית'},{e:'diary',h:'יומן'},
+  {e:'sounds',h:'נשמע'},{e:'really scary',h:'נורא מפחיד'},
+  {e:'hurt',h:'לפגוע ב-'},{e:'daily life',h:'חיי יום-יום'},
+  {e:'survived',h:'שרד'}
+];
+const MP=[
+  {n:1,e:"I don't get it",h:'אני לא מבין'},{n:2,e:'concentration camps',h:'מחנה ריכוז'},
+  {n:3,e:'grew up',h:'גדל/ה'},{n:4,e:"'Never Again'",h:'לעולם לא עוד'},
+  {n:5,e:'make sure',h:'לוודא'},{n:6,e:'stay strong',h:'להישאר חזק/ם'},
+  {n:7,e:'safe',h:'בטוח/ה'},{n:8,e:'Exactly',h:'בדיוק'},
+  {n:9,e:'honor',h:'לכבד'},{n:10,e:'suffered',h:'סבל/ו'},
+  {n:11,e:'promise',h:'להבטיח'},{n:12,e:'protect',h:'להגן'}
+];
+const MX=['נורא מפחיד','שרד','יומן','הסתתר(ו)'];
+// IMG items loaded via Wikimedia API at runtime; emoji shown while loading or on error
+const IMG=[
+  {id:'diary',     lb:"Anne Frank's diary",              file:'AnneFrankDiary_backside.jpg',                                       emoji:'📔'},
+  {id:'annefrank', lb:"Anne Frank",                      file:'Anne_Frank_lacht_naar_de_fotograaf_-_Nationaal_Archief.jpg',       emoji:'👧'},
+  {id:'star',      lb:"The star Jews had to wear",        file:'Yellow_star_Jude_Jew.svg',                                        emoji:'✡️'},
+  {id:'amsterdam', lb:"Map of Amsterdam",                file:'Jan_van_der_Heyden_-_Canal_in_Amsterdam.jpg',                     emoji:'🗺️'},
+  {id:'secretattic',lb:"Secret attic behind a bookcase", file:'Anne_Frank_Huis_Amsterdam_2002.jpg',                               emoji:'🏠'},
+  {id:'yadvashem', lb:"Yad Vashem Museum",               file:'Yad_Vashem_Holocaust_Museum.jpg',                                  emoji:'🕯️'},
+  {id:'prisoner',  lb:"Prisoners in a concentration camp",file:'Buchenwald_survivors_3May1945.jpg',                               emoji:'🔢'},
+  {id:'neveragain',lb:"Never Again",                     file:'Yellowbadge_logo.svg',                                             emoji:'✊'},
+  {id:'camps',     lb:"Concentration Camp gates",        file:'Auschwitz_I_gate.jpg',                                             emoji:'🚧'}
+];
+
+// Wikimedia Commons API – fetch real thumbnail URL
+async function loadWikiThumb(file, imgEl, emoji) {
+  try {
+    const api = 'https://en.wikipedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url&iiurlwidth=120&format=json&origin=*&titles=File:' + encodeURIComponent(file);
+    const r = await fetch(api);
+    const d = await r.json();
+    const page = Object.values(d.query.pages)[0];
+    if (page && page.imageinfo && page.imageinfo.length > 0 && page.imageinfo[0] && page.imageinfo[0].thumburl) {
+      imgEl.src = page.imageinfo[0].thumburl;
+      return;
+    }
+  } catch(e) {}
+  // fallback: show emoji
+  const fb = document.createElement('div');
+  fb.style.cssText='font-size:2.2rem;line-height:72px;text-align:center;';
+  fb.textContent = emoji;
+  imgEl.replaceWith(fb);
+}
+const HEP=[
+  {e:'Holocaust',h:'שואה'},{e:'Never again',h:'לעולם לא עוד'},
+  {e:'diary',h:'יומן'},{e:'stay strong',h:'להישאר חזקים'},
+  {e:'suffer',h:'לסבול'},{e:'keep [...] safe',h:'לשמור בטוח(ים)'},
+  {e:'hide',h:'להסתתר'},{e:'honor',h:'לכבד/ להוקיר'},
+  {e:'secret attic',h:'עליית-גג סודית'},{e:'promise',h:'להבטיח'},
+  {e:'survive',h:'לשרוד'},{e:'protect',h:'להגן'},
+  {e:'sounds really scary',h:'נשמע נורא מפחיד'},
+  {e:"I don't get it",h:'אני לא מבין'},{e:'hurt',h:'לפגוע ב-'}
+];
+const HEX='לוודא';
+const EHP=[
+  {h:'לוודא',e:'make sure'},{h:'הסתתר(ו)',e:'hid'},
+  {h:'אני לא קולט\\מבין',e:"I don't get it"},{h:'חיי יום-יום',e:'daily life'},
+  {h:'לשבת בשקט',e:'sit quietly'},{h:'בדיוק',e:'exactly'}
+];
+const FK=['Holocaust','hurt','secret attic','safe','diary','sounds really scary','sit quietly','careful','survived','fears','daily'];
+const FTPL=`<span class="ss">Safta Sara:</span> "Well, Anne was a Jewish girl, like us. During the BLANK0 — a time when the Nazis wanted to BLANK1 Jewish people, she and her family hid in a BLANK2 behind a bookcase to stay BLANK3. She wrote about her life in a BLANK4."<br><br><span class="si">Itamar:</span> "A secret attic? That BLANK5."<br><br><span class="ss">Safta Sara:</span> "Yes, it was. They had to BLANK6 and they had to be BLANK7. Sadly, the Nazis found them and took them away. But her diary BLANK8, which helps us learn about her life. In her words, we see her hopes, BLANK9, and BLANK10 life."`;
+const FW=[
+  {p:'(1) Hol',a:'ocaust'},{p:'(2) h',a:'urt'},{p:'(3) h',a:'id'},
+  {p:'(4) se',a:'cret'},{p:'(5) d',a:'iary'},{p:'(6) so',a:'unds really scary'},
+  {p:'(8) q',a:'uietly'},{p:'(9) ca',a:'reful'},{p:'(10) da',a:'ily life'}
+];
+const PS=[
+  {s:['Holocaust','hide'],      t:'During the ___0___, many Jewish families had to ___1___ so the Nazis would not find them.'},
+  {s:['secret attic','diary'],  t:'Anne Frank and her family lived in a ___0___ for a long time. She wrote in her ___1___ every day.'},
+  {s:['suffer','survived'],     t:'Many people had to ___0___ because of the war. Some people ___1___ and told their stories.'},
+  {s:['honor','Never again'],   t:'Today, we ___0___ the people who died in the Holocaust and say ___1___ because we want to stop terrible things.'},
+  {s:['protect','keep safe'],   t:'It is important to ___0___ people from danger and to help everyone ___1___.'},
+  {s:['stay strong','promise'], t:'Even when times are hard, we must ___0___. We also must ___1___ to remember history.'}
+];
+// ============= STATE =============
+const DS={
+  timerDone:false,memAttempts:0,memScore:0,memFinal:false,
+  ratingVal:null,ratingAttempts:0,ratingDone:false,
+  gmVal:null,gmAttempts:0,gmDone:false,
+  helpSel:[],helpAttempts:0,helpDone:false,
+  p1Score:null,p1Done:false,
+  compSel:[],compAttempts:0,compDone:false,compScore:0,
+  vAttempts:0,vDone:false,vAns:{},vScore:0,
+  mAttempts:0,mDone:false,mAns:{},mScore:0,
+  p2Score:null,p2Done:false,
+  imgAttempts:0,imgDone:false,imgScore:0,imgMatches:{},
+  heAttempts:0,heDone:false,heScore:0,heAns:{},
+  ehAttempts:0,ehDone:false,ehScore:0,ehAns:{},
+  fillAttempts:0,fillDone:false,fillScore:0,fillAns:{},
+  fixAttempts:0,fixDone:false,fixScore:0,fixAns:{},
+  pairsAttempts:0,pairsDone:false,pairsScore:0,pairsAns:{},
+  thinkAttempts:0,thinkDone:false,thinkScore:0,
+  p3Score:null,p3Done:false
+};
+let S=Object.assign({},DS);
+function LS(){try{const s=localStorage.getItem('yhs_v4');if(s)S=Object.assign({},DS,JSON.parse(s));}catch(e){}}
+function SS(){try{localStorage.setItem('yhs_v4',JSON.stringify(S));}catch(e){}}
+function atag(id,n,mx){
+  const el=document.getElementById(id);if(!el)return;
+  if(n>=mx){el.style.background='#d1fae5';el.style.color='#065f46';el.textContent='✓ הושלם';}
+  else el.textContent=`ניסיון ${n+1} מתוך ${mx}`;
+}
+function calcTot(){
+  const s1=(S.memFinal?S.memScore:0)+(S.ratingDone?1:0)+(S.gmDone?1:0)+(S.helpDone?1:0);
+  const s2=(S.compScore||0)+(S.vScore||0)+(S.mScore||0);
+  const s3=(S.imgScore||0)+(S.heScore||0)+(S.ehScore||0)+(S.fillScore||0)+(S.fixScore||0)+(S.pairsScore||0)+(S.thinkScore||0);
+  const s4=(S.t4aScore||0)+(S.t4bScore||0)+(S.t4cScore||0)+(S.t4dScore||0);
+  const raw=s1+s2+s3+s4; const tot=Math.min(Math.round(raw*100/134),100); return{s1,s2,s3,s4,tot,mx:100};
+}
+function refreshUI(){
+  const{tot,mx}=calcTot();
+  const pct=Math.round((tot/mx)*100);
+  document.getElementById('gScore').textContent=`ציון: ${tot}/${mx}`;
+  document.getElementById('gScore').classList.add('pulse');
+  setTimeout(()=>document.getElementById('gScore').classList.remove('pulse'),500);
+  document.getElementById('pFill').style.width=pct+'%';
+  document.getElementById('pText').textContent=pct+'%';
+  SS();
+}
+// ============= TAB =============
+function switchTab(id){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id===id));
+  if(id==='tab2')initT2();
+  if(id==='tab3')initT3();
+  if(id==='tab4')initT4();
+  if(id==='tab5')setTimeout(initBadgeCanvas,50);
+}
+// ============= PART 1 =============
+let timerInt=null,timerSec=30;
+function startTimer(){
+  document.getElementById('startBtn').disabled=true;
+  document.getElementById('startBtn').textContent='⏳ הטיימר רץ...';
+  timerSec=30;
+  timerInt=setInterval(()=>{
+    timerSec--;
+    const el=document.getElementById('timer');
+    el.textContent='00:'+String(timerSec).padStart(2,'0');
+    if(timerSec<=10)el.classList.add('urgent');
+    if(timerSec<=0){clearInterval(timerInt);S.timerDone=true;SS();showPh('ph-select');buildCL();}
+  },1000);
+}
+function showPh(id){
+  document.querySelectorAll('.phase').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+let memSel=new Set();
+function buildCL(){
+  const cl=document.getElementById('clist');cl.innerHTML='';
+  [...MEM_ALL].sort(()=>Math.random()-0.5).forEach(item=>{
+    const d=document.createElement('div');d.className='ci';d.dataset.id=item.id;
+    d.innerHTML=`<span class="bx"></span><span>${item.l}</span>`;
+    d.onclick=()=>{if(S.memFinal)return;if(memSel.has(item.id)){memSel.delete(item.id);d.classList.remove('sel');d.querySelector('.bx').textContent='';}else{memSel.add(item.id);d.classList.add('sel');d.querySelector('.bx').textContent='✓';}};
+    cl.appendChild(d);
+  });
+  atag('mAttempt',S.memAttempts,2);
+}
+function checkMem(){
+  if(memSel.size===0){alert('סמנו לפחות פריט אחד!');return;}
+  S.memAttempts++;
+  let cor=0,wr=0;
+  // Show colour feedback but keep selections visible
+  document.querySelectorAll('#clist .ci').forEach(it=>{it.classList.remove('ok2','no2','miss');});
+  memSel.forEach(id=>{
+    const el=document.querySelector(`.ci[data-id="${id}"]`);
+    if(!el) return;
+    if(MEM_CORRECT.includes(id)){cor++;el.classList.add('ok2');el.querySelector('.bx').textContent='✓';}
+    else{wr++;el.classList.add('no2');el.querySelector('.bx').textContent='✗';}
+  });
+  const pct=Math.round((cor/MEM_CORRECT.length)*100);
+  const res=document.getElementById('memRes');res.classList.add('show');
+  if(S.memAttempts<2){
+    res.className=`rbox show ${pct>=70?'ok':'warn'}`;
+    res.innerHTML=`${pct>=70?'✅':'⚠️'} ${cor}/${MEM_CORRECT.length} נכון. תוכלו לשנות סימונים ולנסות שוב, או להמשיך.<br>
+      <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+        <button class="btn btn-p" onclick="recheckMem()" style="font-size:.85rem;padding:8px 16px;">🔄 נסה שוב / Try Again</button>
+        <button class="btn btn-s" onclick="finishMem()" style="font-size:.85rem;padding:8px 16px;">המשך ▶ Continue</button>
+      </div>`;
+    atag('mAttempt',S.memAttempts,2);
+    // Keep memSel as-is (don't clear!) – user can uncheck manually
+    document.getElementById('checkMemBtn').style.display='none';
+  }else{
+    finishMem();
+  }
+  SS();
+}
+function recheckMem(){
+  // Re-enable checking (user may have changed selections)
+  S.memAttempts--;  // don't count this as extra attempt
+  document.getElementById('checkMemBtn').style.display='inline-flex';
+  document.getElementById('memRes').classList.remove('show');
+  // Remove colour feedback so user can see their current state
+  document.querySelectorAll('#clist .ci').forEach(it=>{
+    it.classList.remove('ok2','no2','miss');
+    // Keep sel class if in memSel
+    if(memSel.has(it.dataset.id)){it.querySelector('.bx').textContent='✓';}
+    else{it.querySelector('.bx').textContent='';}
+  });
+}
+function finishMem(){
+  let cor=0,wr=0;
+  memSel.forEach(id=>{
+    if(MEM_CORRECT.includes(id))cor++; else wr++;
+  });
+  MEM_CORRECT.forEach(id=>{if(!memSel.has(id)){const el=document.querySelector(`.ci[data-id="${id}"]`);if(el)el.classList.add('miss');}});
+  S.memFinal=true;S.memScore=Math.max(0,cor-wr);
+  const pct=Math.round((cor/MEM_CORRECT.length)*100);
+  const res=document.getElementById('memRes');res.classList.add('show');
+  res.className=`rbox show ${pct>=70?'ok':pct>=40?'warn':'err'}`;
+  res.innerHTML=`🏁 ציון סופי: ${cor}/${MEM_CORRECT.length} (${pct}%)<br>${pct>=70?'🌟 מעולה!':'💪 כל מאמץ נחשב!'}<br><br><button class="btn btn-s" onclick="showPh('ph-reflect')" style="margin-top:8px;">המשך לשאלות ▶</button>`;
+  document.getElementById('checkMemBtn').style.display='none';
+  atag('mAttempt',2,2);SS();refreshUI();
+}
+function selRating(v){S.ratingVal=v;document.querySelectorAll('.rbtn').forEach(b=>b.classList.toggle('sel',parseInt(b.dataset.r)===v));}
+function subRating(){
+  if(S.ratingDone)return;if(!S.ratingVal){alert('בחרו ציון!');return;}
+  S.ratingAttempts++;const res=document.getElementById('ratingRes');res.classList.add('show');
+  if(S.ratingAttempts<2){res.className='rbox show warn';res.innerHTML=`📝 בחרתם ${S.ratingVal}. ניתן לשנות.`;atag('r1A',S.ratingAttempts,2);}
+  else{S.ratingDone=true;res.className='rbox show ok';res.innerHTML=`✅ נשמר: ${S.ratingVal}/5`;document.querySelectorAll('.rbtn').forEach(b=>b.disabled=true);atag('r1A',S.ratingAttempts,2);SS();refreshUI();chkP1();}SS();
+}
+let gmCur=null;
+function selGM(v,el){gmCur=v;document.querySelectorAll('#gmOpts .oi').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');}
+function subGM(){
+  if(S.gmDone)return;if(!gmCur){alert('בחרו תשובה!');return;}
+  S.gmAttempts++;S.gmVal=gmCur;const res=document.getElementById('gmRes');res.classList.add('show');
+  if(S.gmAttempts<2){res.className='rbox show warn';res.innerHTML=`📝 בחרתם: ${gmCur==='yes'?'כן':'לא'}. ניתן לשנות.`;atag('r2A',S.gmAttempts,2);}
+  else{S.gmDone=true;res.className='rbox show ok';res.innerHTML='✅ נשמר!';document.querySelectorAll('#gmOpts .oi').forEach(o=>o.style.pointerEvents='none');atag('r2A',S.gmAttempts,2);SS();refreshUI();chkP1();}SS();
+}
+function togHelp(el,v){
+  if(S.helpDone)return;
+  const i=S.helpSel.indexOf(v);
+  if(i>-1){S.helpSel.splice(i,1);el.classList.remove('sel');}else{S.helpSel.push(v);el.classList.add('sel');}
+}
+function subHelp(){
+  if(S.helpDone)return;if(S.helpSel.length===0){alert('סמנו לפחות אפשרות אחת!');return;}
+  S.helpAttempts++;const res=document.getElementById('helpRes');res.classList.add('show');
+  if(S.helpAttempts<2){res.className='rbox show warn';res.innerHTML=`📝 בחרתם ${S.helpSel.length} אפשרויות. ניתן לשנות.`;atag('r5A',S.helpAttempts,2);}
+  else{S.helpDone=true;res.className='rbox show ok';res.innerHTML='✅ נשמר!';document.querySelectorAll('#helpOpts .oi').forEach(o=>o.style.pointerEvents='none');atag('r5A',S.helpAttempts,2);SS();refreshUI();chkP1();}SS();
+}
+function chkP1(){
+  if(S.memFinal&&S.ratingDone&&S.gmDone&&S.helpDone){
+    if(!document.getElementById('easy1').value.trim()||!document.getElementById('easy2').value.trim()||!document.getElementById('hard1').value.trim()||!document.getElementById('hard2').value.trim()){alert('אל תשכחו למלא את השאלות הפתוחות!');return;}
+    const{s1}=calcTot();S.p1Score=s1;S.p1Done=true;
+    const pct=Math.round((s1/19)*100);
+    document.getElementById('ss1').classList.add('show');
+    document.getElementById('ss1n').textContent=`${s1}/19`;
+    document.getElementById('ss1l').textContent=pct>=85?'🌟 מצוין!':pct>=65?'👍 טוב!':'💪 המשיכו!';
+    document.querySelector('[data-tab="tab1"]').classList.add('done');SS();
+  }
+}
+// ============= PART 2 =============
+function initT2(){
+  buildVT();buildMT();
+  if(S.vDone)VP.forEach((_,i)=>{const s=document.getElementById(`v_${i}`);if(s){s.disabled=true;s.className='msel '+(s.value===VP[i].h?'ok2':'no2');}});
+  if(S.mDone)MP.forEach((_,i)=>{const s=document.getElementById(`m_${i}`);if(s){s.disabled=true;s.className='msel '+(s.value===MP[i].h?'ok2':'no2');}});
+  if(S.compDone)document.querySelectorAll('#compOpts .cop').forEach(o=>{if(COMP_OK.includes(o.dataset.id)){o.classList.add('ok2');o.querySelector('.cbx').textContent='✓';}});
+  if(S.p2Done){document.getElementById('ss2').classList.add('show');document.getElementById('ss2n').textContent=`${S.p2Score}/28`;}
+  atag('compA',S.compAttempts,2);atag('vA',S.vAttempts,2);atag('mA',S.mAttempts,2);
+}
+function cycleHL(wrap){
+  // Cycle: none → person (blue) → place (green) → none
+  const badge = wrap.querySelector('.hw-badge');
+  if(!wrap.classList.contains('hperson') && !wrap.classList.contains('hplace')){
+    wrap.classList.add('hperson');
+    badge.textContent = '👤 Person';
+  } else if(wrap.classList.contains('hperson')){
+    wrap.classList.remove('hperson');
+    wrap.classList.add('hplace');
+    badge.textContent = '📍 Place';
+  } else {
+    wrap.classList.remove('hplace');
+    badge.textContent = '';
+  }
+}
+// Legacy stubs (no longer used)
+function togglePicker(){}
+function applyHL2(){}
+function closePicker(){}
+function togComp(el){
+  if(S.compDone)return;const id=el.dataset.id;const i=S.compSel.indexOf(id);
+  if(i>-1){S.compSel.splice(i,1);el.classList.remove('sel');el.querySelector('.cbx').textContent='';}
+  else{S.compSel.push(id);el.classList.add('sel');el.querySelector('.cbx').textContent='✓';}
+}
+function checkComp(){
+  if(S.compSel.length===0){alert('סמנו לפחות תשובה!');return;}
+  S.compAttempts++;const cor=S.compSel.filter(id=>COMP_OK.includes(id)).length,wr=S.compSel.filter(id=>!COMP_OK.includes(id)).length;
+  const res=document.getElementById('compRes');res.classList.add('show');
+  if(S.compAttempts<2){atag('compA',S.compAttempts,2);res.className='rbox show warn';res.innerHTML=`⚠️ ${cor} נכון${wr>0?`, ${wr} לא נכון`:''}. נסו שוב!`;S.compSel=[];document.querySelectorAll('#compOpts .cop').forEach(o=>{o.classList.remove('sel');o.querySelector('.cbx').textContent='';});}
+  else{S.compDone=true;document.querySelectorAll('#compOpts .cop').forEach(o=>{if(COMP_OK.includes(o.dataset.id)){o.classList.add('ok2');o.querySelector('.cbx').textContent='✓';}else if(S.compSel.includes(o.dataset.id)){o.classList.add('no2');o.querySelector('.cbx').textContent='✗';}});S.compScore=cor;res.className=`rbox show ${cor===3&&wr===0?'ok':cor>=2?'warn':'err'}`;res.innerHTML=`🏁 ${cor}/${COMP_OK.length}`;atag('compA',S.compAttempts,2);SS();refreshUI();chkP2();}SS();
+}
+function buildVT(){
+  const tb=document.getElementById('vBody');if(!tb||tb.children.length>0)return;
+  const opts=[...VP.map(p=>p.h)].sort(()=>Math.random()-0.5);
+  VP.forEach((p,i)=>{const tr=document.createElement('tr');tr.innerHTML=`<td style="font-weight:600;">${p.e}</td><td><select class="msel" id="v_${i}" onchange="S.vAns[${i}]=this.value;SS()"><option value="">-- בחרו --</option>${opts.map(h=>`<option value="${h}" ${S.vAns[i]===h?'selected':''}>${h}</option>`).join('')}</select></td>`;tb.appendChild(tr);});
+}
+function checkVocab(){
+  let cor=0;VP.forEach((p,i)=>{if(S.vAns[i]===p.h)cor++;});S.vAttempts++;
+  const res=document.getElementById('vRes');res.classList.add('show');
+  if(S.vAttempts<2){atag('vA',S.vAttempts,2);res.className='rbox show warn';res.innerHTML=`⚠️ ${cor}/${VP.length} נכון. נסו לתקן!`;}
+  else{S.vDone=true;S.vScore=cor;VP.forEach((_,i)=>{const s=document.getElementById(`v_${i}`);if(s){s.disabled=true;s.className='msel '+(s.value===VP[i].h?'ok2':'no2');}});atag('vA',S.vAttempts,2);res.className=`rbox show ${cor>=11?'ok':cor>=8?'warn':'err'}`;res.innerHTML=`🏁 ${cor}/${VP.length}`;SS();refreshUI();chkP2();}SS();
+}
+function buildMT(){
+  const tb=document.getElementById('mBody');if(!tb||tb.children.length>0)return;
+  const opts=[...MP.map(p=>p.h),...MX].sort(()=>Math.random()-0.5);
+  MP.forEach((p,i)=>{const tr=document.createElement('tr');tr.innerHTML=`<td><span class="vnum">${p.n}</span> <strong>${p.e}</strong></td><td><select class="msel" id="m_${i}" onchange="S.mAns[${i}]=this.value;SS()"><option value="">-- בחרו --</option>${opts.map(h=>`<option value="${h}" ${S.mAns[i]===h?'selected':''}>${h}</option>`).join('')}</select></td>`;tb.appendChild(tr);});
+}
+function checkMatch(){
+  let cor=0;MP.forEach((p,i)=>{if(S.mAns[i]===p.h)cor++;});S.mAttempts++;
+  const res=document.getElementById('mRes');res.classList.add('show');
+  if(S.mAttempts<2){atag('mA',S.mAttempts,2);res.className='rbox show warn';res.innerHTML=`⚠️ ${cor}/${MP.length} נכון. נסו לתקן!`;}
+  else{S.mDone=true;S.mScore=cor;MP.forEach((_,i)=>{const s=document.getElementById(`m_${i}`);if(s){s.disabled=true;s.className='msel '+(s.value===MP[i].h?'ok2':'no2');}});atag('mA',S.mAttempts,2);res.className=`rbox show ${cor>=10?'ok':cor>=7?'warn':'err'}`;res.innerHTML=`🏁 ${cor}/${MP.length}`;SS();refreshUI();chkP2();}SS();
+}
+function chkP2(){
+  if(S.compDone&&S.vDone&&S.mDone){
+    const s2=S.compScore+S.vScore+S.mScore;S.p2Score=s2;S.p2Done=true;
+    const pct=Math.round((s2/28)*100);
+    document.getElementById('ss2').classList.add('show');document.getElementById('ss2n').textContent=`${s2}/28`;
+    document.getElementById('ss2l').textContent=pct>=85?'🌟 מצוין!':pct>=65?'👍 טוב!':'💪 המשיכו!';
+    document.querySelector('[data-tab="tab2"]').classList.add('done');SS();
+  }
+}
+// ============= PART 3 =============
+function initT3(){
+  buildImg();buildHE();buildEH();buildFill();buildFix();buildPairs();
+  if(S.imgDone){document.querySelectorAll('#imgL .lcard,#imgP .icard').forEach(e=>e.style.pointerEvents='none');}
+  if(S.heDone)HEP.forEach((_,i)=>{const s=document.getElementById(`he_${i}`);if(s){s.disabled=true;s.className='msel '+(s.value===HEP[i].h?'ok2':'no2');}});
+  if(S.ehDone)EHP.forEach((_,i)=>{const s=document.getElementById(`eh_${i}`);if(s){s.disabled=true;s.className='msel '+(s.value===EHP[i].e?'ok2':'no2');}});
+  if(S.fillDone)FK.forEach((k,i)=>{const s=document.getElementById(`fl_${i}`);if(s){s.disabled=true;s.className='fsel '+(s.value===k?'ok2':'no2');}});
+  if(S.fixDone)FW.forEach((_,i)=>{const inp=document.getElementById(`fx_${i}`);if(inp){inp.disabled=true;const ok=inp.value.trim().toLowerCase()===FW[i].a.toLowerCase();inp.className='finp '+(ok?'ok2':'no2');if(!ok)inp.value+=` ✓${FW[i].a}`;}});
+  if(S.pairsDone)PS.forEach((s,si)=>s.s.forEach((_,si2)=>{const sel=document.getElementById(`ps_${si}_${si2}`);if(sel){sel.disabled=true;sel.className='fsel '+(sel.value===s.s[si2]?'ok2':'no2');}}));
+  if(S.thinkDone){document.getElementById('thinkBank').style.display='block';buildTG();}
+  if(S.p3Done){document.getElementById('ss3').classList.add('show');document.getElementById('ss3n').textContent=`${S.p3Score}/66`;const{tot,mx}=calcTot();document.getElementById('totalFinal').textContent=`${tot}/${mx}`;}
+  [['imgA',S.imgAttempts],['heA',S.heAttempts],['ehA',S.ehAttempts],['fillA',S.fillAttempts],['fixA',S.fixAttempts],['pairsA',S.pairsAttempts],['thinkA',S.thinkAttempts]].forEach(([id,n])=>atag(id,n,2));
+}
+let imgSL=null;
+function buildImg(){
+  const ld=document.getElementById('imgL'),pd=document.getElementById('imgP');if(!ld||ld.children.length>0)return;
+  IMG.forEach(item=>{
+    const lc=document.createElement('div');lc.className='lcard';lc.dataset.id=item.id;
+    lc.innerHTML=`<span>📌</span><span style="font-size:.83rem;">${item.lb}</span>`;
+    lc.onclick=()=>{
+      if(S.imgDone||lc.classList.contains('mok'))return;
+      // deselect others that aren't matched
+      document.querySelectorAll('#imgL .lcard:not(.mok)').forEach(l=>l.classList.remove('sel'));
+      imgSL=item.id;
+      lc.classList.add('sel');
+    };
+    ld.appendChild(lc);
+  });
+  [...IMG].sort(()=>Math.random()-0.5).forEach(item=>{
+    const pc=document.createElement('div');pc.className='icard';pc.dataset.id=item.id;
+    // Show emoji while image loads
+    const imgWrap=document.createElement('div');imgWrap.style.cssText='height:72px;display:flex;align-items:center;justify-content:center;font-size:2rem;';imgWrap.textContent=item.emoji;
+    const img=document.createElement('img');img.alt=item.lb;img.style.cssText='width:100%;height:72px;object-fit:cover;border-radius:5px;display:none;';
+    img.onload=function(){imgWrap.style.display='none';img.style.display='block';};
+    const lbl=document.createElement('div');lbl.className='ifb';lbl.textContent=item.lb.substring(0,20);
+    pc.appendChild(imgWrap);pc.appendChild(img);pc.appendChild(lbl);
+    loadWikiThumb(item.file, img, item.emoji);
+    pc.onclick=()=>{
+      if(!imgSL||S.imgDone||pc.classList.contains('mok'))return;
+      const labelId=imgSL;
+      const picId=item.id;
+      const isCorrect=(labelId===picId); // IMG ids match: label id == pic id
+
+      if(isCorrect){
+        // ✅ Lock both green immediately
+        const lc=document.querySelector(`#imgL .lcard[data-id="${labelId}"]`);
+        if(lc){lc.classList.remove('sel');lc.classList.add('mok','matched-flash');lc.style.pointerEvents='none';}
+        pc.classList.remove('sel');pc.classList.add('mok','matched-flash');pc.style.pointerEvents='none';
+        S.imgMatches[labelId]=picId;
+        imgSL=null;
+        // Update matched count display
+        const matched=Object.keys(S.imgMatches).filter(k=>S.imgMatches[k]===k).length;
+        const resEl=document.getElementById('imgRes');
+        resEl.className='rbox show ok';
+        resEl.innerHTML=`<b>✅ ${matched}/${IMG.length}</b> ${matched===IMG.length?'🎉 כל הזוגות! <button class="btn btn-p" style="margin-top:8px;font-size:.85rem;padding:8px 18px;" onclick="finishImgMatch()">סיים ✓</button>':'– המשיכו! בחרו תיאור ואז תמונה.'}`;
+        resEl.style.display='block';
+        if(matched===IMG.length){
+          S.imgDone=true;S.imgScore=IMG.length;
+          finishImgMatch();
+        }
+      } else {
+        // ❌ Flash red briefly – keep label selected so user can try another image
+        const lc2=document.querySelector(`#imgL .lcard[data-id="${labelId}"]`);
+        pc.classList.add('mno');
+        if(lc2)lc2.classList.add('mno');
+        setTimeout(()=>{
+          pc.classList.remove('mno','sel');
+          if(lc2){
+            lc2.classList.remove('mno');
+            lc2.classList.add('sel'); // keep label selected for retry
+          }
+          document.querySelectorAll('#imgP .icard:not(.mok)').forEach(p=>p.classList.remove('sel'));
+          // imgSL stays set – user can immediately click another image
+        },700);
+      }
+      SS();
+    };
+    pd.appendChild(pc);
+  });
+}
+function finishImgMatch(){
+  const cor=Object.keys(S.imgMatches).filter(k=>S.imgMatches[k]===k).length;
+  S.imgDone=true;S.imgScore=cor;
+  document.querySelectorAll('#imgL .lcard,#imgP .icard').forEach(e=>e.style.pointerEvents='none');
+  atag('imgA',2,2);
+  const res=document.getElementById('imgRes');
+  res.className=`rbox show ${cor>=7?'ok':cor>=5?'warn':'err'}`;
+  res.innerHTML=`🏁 ${cor}/${IMG.length}`;
+  SS();refreshUI();chkP3();
+}
+function checkImg(){
+  // No longer needed as main flow – kept for compatibility
+  finishImgMatch();
+}
+function buildHE(){
+  const tb=document.getElementById('heBody');if(!tb||tb.children.length>0)return;
+  const opts=[...HEP.map(p=>p.h),HEX].sort(()=>Math.random()-0.5);
+  HEP.forEach((p,i)=>{const tr=document.createElement('tr');tr.innerHTML=`<td style="font-weight:600;">${p.e}</td><td><select class="msel" id="he_${i}" onchange="S.heAns[${i}]=this.value;SS()"><option value="">-- בחרו --</option>${opts.map(h=>`<option value="${h}" ${S.heAns[i]===h?'selected':''}>${h}</option>`).join('')}</select></td>`;tb.appendChild(tr);});
+}
+function checkHE(){
+  let cor=0;HEP.forEach((p,i)=>{if(S.heAns[i]===p.h)cor++;});S.heAttempts++;
+  const res=document.getElementById('heRes');res.classList.add('show');
+  if(S.heAttempts<2){atag('heA',S.heAttempts,2);res.className='rbox show warn';res.innerHTML=`⚠️ ${cor}/${HEP.length} נכון. נסו לתקן!`;}
+  else{S.heDone=true;S.heScore=cor;HEP.forEach((_,i)=>{const s=document.getElementById(`he_${i}`);if(s){s.disabled=true;s.className='msel '+(s.value===HEP[i].h?'ok2':'no2');}});atag('heA',S.heAttempts,2);res.className=`rbox show ${cor>=13?'ok':cor>=10?'warn':'err'}`;res.innerHTML=`🏁 ${cor}/${HEP.length}`;SS();refreshUI();chkP3();}SS();
+}
+function buildEH(){
+  const tb=document.getElementById('ehBody');if(!tb||tb.children.length>0)return;
+  const bk=document.getElementById('ehBank');EHP.forEach(p=>{const sp=document.createElement('span');sp.className='wchip';sp.textContent=p.e;bk.appendChild(sp);});
+  EHP.forEach((p,i)=>{const tr=document.createElement('tr');tr.innerHTML=`<td style="font-weight:600;direction:rtl;">${p.h}</td><td><select class="msel" id="eh_${i}" onchange="S.ehAns[${i}]=this.value;SS()"><option value="">-- בחרו --</option>${EHP.map(x=>`<option value="${x.e}" ${S.ehAns[i]===x.e?'selected':''}>${x.e}</option>`).join('')}</select></td>`;tb.appendChild(tr);});
+}
+function checkEH(){
+  let cor=0;EHP.forEach((p,i)=>{if(S.ehAns[i]===p.e)cor++;});S.ehAttempts++;
+  const res=document.getElementById('ehRes');res.classList.add('show');
+  if(S.ehAttempts<2){atag('ehA',S.ehAttempts,2);res.className='rbox show warn';res.innerHTML=`⚠️ ${cor}/${EHP.length} נכון.`;}
+  else{S.ehDone=true;S.ehScore=cor;EHP.forEach((_,i)=>{const s=document.getElementById(`eh_${i}`);if(s){s.disabled=true;s.className='msel '+(s.value===EHP[i].e?'ok2':'no2');}});atag('ehA',S.ehAttempts,2);res.className=`rbox show ${cor>=5?'ok':cor>=3?'warn':'err'}`;res.innerHTML=`🏁 ${cor}/${EHP.length}`;SS();refreshUI();chkP3();}SS();
+}
+function buildFill(){
+  const div=document.getElementById('fillDiv');if(!div||div.children.length>0)return;
+  const opts=[...FK].sort(()=>Math.random()-0.5);
+  let html=FTPL;
+  FK.forEach((_,i)=>{const sv=S.fillAns[i]||'';html=html.replace(`BLANK${i}`,`<select class="fsel" id="fl_${i}" onchange="S.fillAns[${i}]=this.value;SS()"><option value="">___</option>${opts.map(k=>`<option value="${k}" ${sv===k?'selected':''}>${k}</option>`).join('')}</select>`);});
+  div.innerHTML=html;
+}
+function checkFill(){
+  let cor=0;FK.forEach((k,i)=>{if(S.fillAns[i]===k)cor++;});S.fillAttempts++;
+  const res=document.getElementById('fillRes');res.classList.add('show');
+  if(S.fillAttempts<2){atag('fillA',S.fillAttempts,2);res.className='rbox show warn';res.innerHTML=`⚠️ ${cor}/${FK.length} נכון. נסו לתקן!`;}
+  else{S.fillDone=true;S.fillScore=cor;FK.forEach((k,i)=>{const s=document.getElementById(`fl_${i}`);if(s){s.disabled=true;s.className='fsel '+(s.value===k?'ok2':'no2');}});atag('fillA',S.fillAttempts,2);res.className=`rbox show ${cor>=9?'ok':cor>=6?'warn':'err'}`;res.innerHTML=`🏁 ${cor}/${FK.length}`;SS();refreshUI();chkP3();}SS();
+}
+function buildFix(){
+  const div=document.getElementById('fixDiv');if(!div||div.children.length>0)return;
+  const t=i=>`<strong>${FW[i].p}</strong><input type="text" class="finp" id="fx_${i}" value="${S.fixAns[i]||''}" placeholder="..." oninput="S.fixAns[${i}]=this.value;SS()">`;
+  div.innerHTML=`<span class="ss">Safta Sara:</span> "Well, Anne was a Jewish girl, like us. During the ${t(0)} — a time when the Nazis wanted to ${t(1)} Jewish people, she and her family ${t(2)} in a ${t(3)}cret attic behind a bookcase to stay safe. She wrote about her life in a ${t(4)}."<br><br><span class="si">Itamar:</span> "A secret attic? That ${t(5)}."<br><br><span class="ss">Safta Sara:</span> "Yes, it was. They had to sit ${t(6)} and they had to be ${t(7)}. Sadly, the Nazis found them and took them away.<br>In her words, we see her hopes, fears, and ${t(8)} life."`;
+}
+function checkFix(){
+  let cor=0;FW.forEach((f,i)=>{const inp=document.getElementById(`fx_${i}`);if(inp&&inp.value.trim().toLowerCase()===f.a.toLowerCase())cor++;});S.fixAttempts++;
+  const res=document.getElementById('fixRes');res.classList.add('show');
+  if(S.fixAttempts<2){atag('fixA',S.fixAttempts,2);res.className='rbox show warn';res.innerHTML=`⚠️ ${cor}/${FW.length} נכון. נסו לתקן!`;}
+  else{S.fixDone=true;S.fixScore=cor;FW.forEach((f,i)=>{const inp=document.getElementById(`fx_${i}`);if(inp){inp.disabled=true;const ok=inp.value.trim().toLowerCase()===f.a.toLowerCase();inp.className='finp '+(ok?'ok2':'no2');if(!ok)inp.value+=` ✓${f.a}`;}});atag('fixA',S.fixAttempts,2);res.className=`rbox show ${cor>=7?'ok':cor>=5?'warn':'err'}`;res.innerHTML=`🏁 ${cor}/${FW.length}`;SS();refreshUI();chkP3();}SS();
+}
+function buildPairs(){
+  const div=document.getElementById('pairsDiv');if(!div||div.children.length>0)return;
+  const allW=PS.flatMap(s=>s.s).sort(()=>Math.random()-0.5);
+  PS.forEach((sent,si)=>{
+    const d=document.createElement('div');d.style.cssText='background:#f8faff;border:1px solid var(--border);border-radius:10px;padding:13px;line-height:2.5;font-size:.9rem;';
+    let html=`<div style="color:var(--gray);font-size:.77rem;margin-bottom:3px;">משפט ${si+1}</div>`+sent.t;
+    sent.s.forEach((_,si2)=>{const key=`ps_${si}_${si2}`,sv=S.pairsAns[key]||'';html=html.replace(`___${si2}___`,`<select class="fsel" id="${key}" onchange="S.pairsAns['${key}']=this.value;SS()"><option value="">---</option>${allW.map(w=>`<option value="${w}" ${sv===w?'selected':''}>${w}</option>`).join('')}</select>`);});
+    d.innerHTML=html;div.appendChild(d);
+  });
+}
+function checkPairs(){
+  let cor=0,tot=0;PS.forEach((s,si)=>s.s.forEach((w,si2)=>{tot++;if(S.pairsAns[`ps_${si}_${si2}`]===w)cor++;}));S.pairsAttempts++;
+  const res=document.getElementById('pairsRes');res.classList.add('show');
+  if(S.pairsAttempts<2){atag('pairsA',S.pairsAttempts,2);res.className='rbox show warn';res.innerHTML=`⚠️ ${cor}/${tot} נכון. נסו לתקן!`;}
+  else{S.pairsDone=true;S.pairsScore=cor;PS.forEach((s,si)=>s.s.forEach((w,si2)=>{const sel=document.getElementById(`ps_${si}_${si2}`);if(sel){sel.disabled=true;sel.className='fsel '+(sel.value===w?'ok2':'no2');}}));atag('pairsA',S.pairsAttempts,2);res.className=`rbox show ${cor>=10?'ok':cor>=7?'warn':'err'}`;res.innerHTML=`🏁 ${cor}/${tot}`;SS();refreshUI();chkP3();}SS();
+}
+function addWS(){const d=document.getElementById('extraWS');const n=d.children.length+2;const ta=document.createElement('textarea');ta.className='tinp';ta.rows=2;ta.placeholder=`משפט ${n} / Sentence ${n}...`;ta.style.cssText='margin-top:8px;resize:vertical;';d.appendChild(ta);}
+function subThink(){
+  if(!document.getElementById('th1').value.trim()||!document.getElementById('th2').value.trim()||!document.getElementById('th3').value.trim()||!document.getElementById('th4').value.trim()){alert('מלאו את כל השאלות!');return;}
+  S.thinkAttempts++;['th1','th2','th3','th4'].forEach(id=>document.getElementById(id).disabled=true);
+  document.getElementById('thinkBank').style.display='block';buildTG();
+  document.getElementById('thinkRes').className='rbox show warn';
+  document.getElementById('thinkRes').innerHTML='✅ תשובות נשמרו! עכשיו נסו עם בנק המילים למטה.';
+  atag('thinkA',S.thinkAttempts,2);SS();
+}
+function buildTG(){const g=document.getElementById('thinkGrid');if(g.children.length>0)return;[['tq1','We write in a diary. What else?'],['tq2','We light a candle. What else to remember?'],['tq3','We talk to people. How else to help?'],['tq4','We say "Stay strong". What else?']].forEach(([id,lbl])=>{const d=document.createElement('div');d.style.cssText='background:#f8faff;border:1px solid var(--border);border-radius:10px;padding:10px;';d.innerHTML=`<div style="font-size:.79rem;font-weight:700;margin-bottom:5px;">${lbl}</div><textarea class="tinp" id="${id}" rows="2" placeholder="3 תשובות..." style="margin:0;resize:vertical;font-size:.81rem;"></textarea>`;g.appendChild(d);});}
+function subThink2(){
+  if(!document.getElementById('tq1').value.trim()||!document.getElementById('tq2').value.trim()||!document.getElementById('tq3').value.trim()||!document.getElementById('tq4').value.trim()){alert('מלאו את כל השאלות!');return;}
+  const TC={q1:['journal','Notebook','blog'],q2:['Visit a memorial','look at old photos','say a prayer'],q3:['give a hug','Listen','be kind'],q4:['Stay safe','Be careful','Take care']};
+  let sc=0;[['tq1','q1'],['tq2','q2'],['tq3','q3'],['tq4','q4']].forEach(([id,qk])=>{const low=document.getElementById(id).value.toLowerCase();TC[qk].forEach(c=>{if(low.includes(c.toLowerCase()))sc++;});});
+  S.thinkDone=true;S.thinkScore=sc;document.querySelectorAll('#thinkGrid textarea').forEach(t=>t.disabled=true);
+  atag('thinkA',2,2);
+  document.getElementById('thinkRes2').className=`rbox show ${sc>=8?'ok':sc>=4?'warn':'err'}`;
+  document.getElementById('thinkRes2').innerHTML=`✅ זיהינו ${sc} תשובות מהבנק.`;
+  SS();refreshUI();chkP3();
+}
+function chkP3(){
+  if(S.imgDone&&S.heDone&&S.ehDone&&S.fillDone&&S.fixDone&&S.pairsDone&&S.thinkDone){
+    const s3=S.imgScore+S.heScore+S.ehScore+S.fillScore+S.fixScore+S.pairsScore+S.thinkScore;
+    S.p3Score=s3;S.p3Done=true;
+    const pct=Math.round((s3/66)*100);
+    document.getElementById('ss3').classList.add('show');document.getElementById('ss3n').textContent=`${s3}/66`;
+    document.getElementById('ss3l').textContent=pct>=85?'🌟 מצוין!':pct>=65?'👍 טוב!':'💪 המשיכו!';
+    document.querySelector('[data-tab="tab3"]').classList.add('done');
+    const{tot,mx}=calcTot();document.getElementById('totalFinal').textContent=`${tot}/${mx}`;SS();
+  }
+}
+
+// ============= PART 4 DATA =============
+const T4A_ANS = ['get up','study for','wait for','buy','walk'];
+const T4A_OPTS = ['studied','bought','walk','buy','study for','wait for','get up','waited for'];
+
+const T4B_ANS = ['escape','hide','even','protect','memories'];
+const T4B_OPTS = ['memories','protect','even','escape','hide'];
+
+const T4C_PAIRS = [
+  {a:'Survivors had to learn to live',      b:'with painful memories.'},
+  {a:'They had to stay strong',             b:'even when the times were hard.'},
+  {a:'Many Jews had to escape',             b:'Europe.'},
+  {a:'Some people had to change their names',b:'to protect themselves.'},
+  {a:'Families had to hide',                b:'in secret places to stay safe.'},
+];
+
+const T4D_SENTENCES = [
+  {words:['Children','had to','help','their','brothers and sisters'], answer:'Children had to help their brothers and sisters.'},
+  {words:['Many children','had to','leave','their','homes and schools'], answer:'Many children had to leave their homes and schools.'},
+  {words:['They','had to','speak','quietly','when they','were hiding'], answer:'They had to speak quietly when they were hiding.'},
+  {words:['Jewish people','had to','wear','special stars','on','their clothes'], answer:'Jewish people had to wear special stars on their clothes.'},
+  {words:['Teachers','had to','teach','in','secret','places'], answer:'Teachers had to teach in secret places.'},
+  {words:['Children','had to','grow up','quickly','during this time'], answer:'Children had to grow up quickly during this time.'},
+];
+
+// extend state defaults
+Object.assign(S, {
+  t4aAns:{}, t4aAttempts:0, t4aDone:false, t4aScore:0,
+  t4bAns:{}, t4bAttempts:0, t4bDone:false, t4bScore:0,
+  t4cMatches:{}, t4cAttempts:0, t4cDone:false, t4cScore:0,
+  t4dAns:{}, t4dAttempts:0, t4dDone:false, t4dScore:0,
+  p4Score:null, p4Done:false,
+});
+
+function initT4(){
+  // Fill selects with options
+  ['t4a','t4b'].forEach(prefix=>{
+    const opts = prefix==='t4a'?T4A_OPTS:T4B_OPTS;
+    const ans  = prefix==='t4a'?T4A_ANS:T4B_ANS;
+    for(let i=0;i<ans.length;i++){
+      const sel=document.getElementById(`${prefix}_${i}`);
+      if(!sel||sel.options.length>1)continue;
+      opts.forEach(o=>{const op=document.createElement('option');op.value=o;op.textContent=o;if(S[`${prefix}Ans`][i]===o)op.selected=true;sel.appendChild(op);});
+    }
+  });
+  if(S.t4aDone) lockT4Sel('t4a',T4A_ANS,5);
+  if(S.t4bDone) lockT4Sel('t4b',T4B_ANS,5);
+  buildT4c();
+  buildT4d();
+  if(S.t4cDone) lockT4c();
+  if(S.t4dDone) lockT4d();
+  if(S.p4Done){document.getElementById('ss4').classList.add('show');document.getElementById('ss4n').textContent=`${S.p4Score}/35`;}
+  atag('t4aAttempt',S.t4aAttempts,2);atag('t4bAttempt',S.t4bAttempts,2);
+  atag('t4cAttempt',S.t4cAttempts,2);atag('t4dAttempt',S.t4dAttempts,2);
+}
+
+function checkT4a(){
+  let cor=0;T4A_ANS.forEach((a,i)=>{if(S.t4aAns[i]===a)cor++;});
+  S.t4aAttempts++;const res=document.getElementById('t4aRes');res.classList.add('show');
+  if(S.t4aAttempts<2){atag('t4aAttempt',S.t4aAttempts,2);res.className='rbox show warn';res.innerHTML=`⚠️ ${cor}/5 נכון. נסו לתקן!`;}
+  else{S.t4aDone=true;S.t4aScore=cor;lockT4Sel('t4a',T4A_ANS,5);atag('t4aAttempt',S.t4aAttempts,2);res.className=`rbox show ${cor>=4?'ok':cor>=3?'warn':'err'}`;res.innerHTML=`🏁 ${cor}/5`;SS();refreshUI();chkP4();}SS();
+}
+function checkT4b(){
+  let cor=0;T4B_ANS.forEach((a,i)=>{if(S.t4bAns[i]===a)cor++;});
+  S.t4bAttempts++;const res=document.getElementById('t4bRes');res.classList.add('show');
+  if(S.t4bAttempts<2){atag('t4bAttempt',S.t4bAttempts,2);res.className='rbox show warn';res.innerHTML=`⚠️ ${cor}/5 נכון. נסו לתקן!`;}
+  else{S.t4bDone=true;S.t4bScore=cor;lockT4Sel('t4b',T4B_ANS,5);atag('t4bAttempt',S.t4bAttempts,2);res.className=`rbox show ${cor>=4?'ok':cor>=3?'warn':'err'}`;res.innerHTML=`🏁 ${cor}/5`;SS();refreshUI();chkP4();}SS();
+}
+function lockT4Sel(prefix,ans,n){
+  for(let i=0;i<n;i++){const s=document.getElementById(`${prefix}_${i}`);if(s){s.disabled=true;s.className='fsel '+(s.value===ans[i]?'ok2':'no2');}}
+}
+
+// TASK C – matching
+let t4cSelA=null;
+function buildT4c(){
+  const gA=document.getElementById('t4cGroupA'),gB=document.getElementById('t4cGroupB');
+  if(!gA||gA.children.length>0)return;
+  T4C_PAIRS.forEach((p,i)=>{
+    const d=document.createElement('div');d.className='lcard';d.dataset.id='a'+i;
+    d.innerHTML=`<span>📌</span><span style="font-size:.82rem;">${p.a}</span>`;
+    d.onclick=()=>{if(S.t4cDone)return;document.querySelectorAll('#t4cGroupA .lcard').forEach(l=>l.classList.remove('sel'));t4cSelA=i;d.classList.add('sel');};
+    gA.appendChild(d);
+  });
+  // shuffle Group B
+  const shuffled=[...T4C_PAIRS.map((p,i)=>({b:p.b,i}))].sort(()=>Math.random()-0.5);
+  shuffled.forEach(({b,i})=>{
+    const d=document.createElement('div');d.className='lcard';d.dataset.id='b'+i;d.dataset.origIdx=i;
+    d.style.cssText='font-size:.82rem;cursor:pointer;';d.innerHTML=`<span>🔵</span><span>${b}</span>`;
+    d.onclick=()=>{
+      if(t4cSelA===null||S.t4cDone)return;
+      S.t4cMatches[t4cSelA]=i;
+      document.querySelectorAll('#t4cGroupB .lcard').forEach(l=>l.classList.remove('sel'));
+      d.classList.add('sel');
+      document.querySelectorAll('#t4cGroupA .lcard').forEach(l=>l.classList.remove('sel'));
+      t4cSelA=null;SS();
+    };
+    gB.appendChild(d);
+  });
+}
+function checkT4c(){
+  let cor=0;
+  T4C_PAIRS.forEach((_,i)=>{if(S.t4cMatches[i]===i)cor++;});
+  S.t4cAttempts++;const res=document.getElementById('t4cRes');res.classList.add('show');
+  if(S.t4cAttempts<2){atag('t4cAttempt',S.t4cAttempts,2);res.className='rbox show warn';res.innerHTML=`⚠️ ${cor}/5 נכון. נסו שוב!`;}
+  else{S.t4cDone=true;S.t4cScore=cor;lockT4c();atag('t4cAttempt',S.t4cAttempts,2);res.className=`rbox show ${cor>=4?'ok':cor>=3?'warn':'err'}`;res.innerHTML=`🏁 ${cor}/5`;SS();refreshUI();chkP4();}SS();
+}
+function lockT4c(){
+  document.querySelectorAll('#t4cGroupA .lcard,#t4cGroupB .lcard').forEach(l=>l.style.pointerEvents='none');
+}
+
+// TASK D – word order (select dropdowns per slot)
+function buildT4d(){
+  const div=document.getElementById('t4dDiv');if(!div||div.children.length>0)return;
+  T4D_SENTENCES.forEach((sent,si)=>{
+    const d=document.createElement('div');
+    d.style.cssText='background:#f8faff;border:1px solid var(--border);border-radius:10px;padding:14px;';
+    d.innerHTML=`<div style="color:var(--gray);font-size:.77rem;margin-bottom:8px;">משפט ${si+1}</div>`;
+    const slotDiv=document.createElement('div');slotDiv.style.cssText='display:flex;flex-wrap:wrap;gap:6px;align-items:center;';
+    const shuffled=[...sent.words].sort(()=>Math.random()-0.5);
+    sent.words.forEach((_,wi)=>{
+      const sel=document.createElement('select');sel.className='fsel';sel.id=`t4d_${si}_${wi}`;
+      sel.style.minWidth='90px';
+      const saved=S.t4dAns[`${si}_${wi}`]||'';
+      sel.innerHTML=`<option value="">___</option>`+shuffled.map(w=>`<option value="${w}" ${saved===w?'selected':''}>${w}</option>`).join('');
+      sel.onchange=()=>{S.t4dAns[`${si}_${wi}`]=sel.value;SS();};
+      slotDiv.appendChild(sel);
+    });
+    const dot=document.createElement('span');dot.textContent='.';dot.style.fontWeight='700';slotDiv.appendChild(dot);
+    d.appendChild(slotDiv);div.appendChild(d);
+  });
+}
+function checkT4d(){
+  let cor=0,tot=0;
+  T4D_SENTENCES.forEach((sent,si)=>{
+    const chosen=sent.words.map((_,wi)=>S.t4dAns[`${si}_${wi}`]||'').join(' ');
+    const correct=sent.words.join(' ');
+    if(chosen===correct)cor++;
+    tot++;
+  });
+  S.t4dAttempts++;const res=document.getElementById('t4dRes');res.classList.add('show');
+  if(S.t4dAttempts<2){atag('t4dAttempt',S.t4dAttempts,2);res.className='rbox show warn';res.innerHTML=`⚠️ ${cor}/${tot} משפטים נכונים. נסו לתקן!`;}
+  else{S.t4dDone=true;S.t4dScore=cor;lockT4d();atag('t4dAttempt',S.t4dAttempts,2);res.className=`rbox show ${cor>=5?'ok':cor>=3?'warn':'err'}`;res.innerHTML=`🏁 ${cor}/${tot}`;SS();refreshUI();chkP4();}SS();
+}
+function lockT4d(){
+  T4D_SENTENCES.forEach((sent,si)=>{
+    const chosen=sent.words.map((_,wi)=>S.t4dAns[`${si}_${wi}`]||'').join(' ');
+    const correct=sent.words.join(' ');
+    const isOk=chosen===correct;
+    sent.words.forEach((_,wi)=>{const sel=document.getElementById(`t4d_${si}_${wi}`);if(sel){sel.disabled=true;sel.className='fsel '+(isOk?'ok2':'no2');}});
+  });
+}
+
+function chkP4(){
+  if(S.t4aDone&&S.t4bDone&&S.t4cDone&&S.t4dDone){
+    const s4=S.t4aScore+S.t4bScore+S.t4cScore+S.t4dScore;
+    S.p4Score=s4;S.p4Done=true;
+    const max4=5+5+5+6;
+    const pct=Math.round((s4/max4)*100);
+    document.getElementById('ss4').classList.add('show');document.getElementById('ss4n').textContent=`${s4}/${max4}`;
+    document.getElementById('ss4l').textContent=pct>=85?'🌟 מצוין!':pct>=65?'👍 טוב!':'💪 המשיכו!';
+    document.querySelector('[data-tab="tab4"]').classList.add('done');
+    const{tot,mx}=calcTot();document.getElementById('totalFinal4').textContent=`${tot}/${mx}`;SS();
+  }
+}
+
+
+// ===== BADGE CREATOR =====
+let badgeColor = '#fbbf24';
+let badgeBorder = '#92400e';
+let badgeSymbol = '✡️';
+let badgeWords = [];
+
+function setBadgeColor(col, brd) {
+  badgeColor = col; badgeBorder = brd;
+  renderBadge();
+}
+function setBadgeSymbol(sym) {
+  badgeSymbol = sym; renderBadge();
+}
+function toggleBadgeWord(btn, word) {
+  const idx = badgeWords.indexOf(word);
+  if (idx > -1) {
+    badgeWords.splice(idx, 1);
+    btn.style.background = 'white'; btn.style.borderColor = 'var(--border)'; btn.style.color = '';
+  } else {
+    if (badgeWords.length >= 2) {
+      alert('בחרו לכל היותר 2 מילים / Choose up to 2 words');
+      return;
+    }
+    badgeWords.push(word);
+    btn.style.background = '#1e40af'; btn.style.borderColor = '#1e40af'; btn.style.color = 'white';
+  }
+  renderBadge();
+}
+
+function renderBadge() {
+  const canvas = document.getElementById('badgeCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = 220, H = 220, cx = W/2, cy = H/2;
+  ctx.clearRect(0, 0, W, H);
+
+  // Draw Star of David shape (6-pointed)
+  const r = 90;
+  ctx.save();
+  // Outer glow
+  ctx.shadowColor = badgeBorder;
+  ctx.shadowBlur = 12;
+
+  function drawTriangle(cx, cy, r, up) {
+    ctx.beginPath();
+    for (let i = 0; i < 3; i++) {
+      const angle = (up ? -90 : 90) + i * 120;
+      const rad = angle * Math.PI / 180;
+      const x = cx + r * Math.cos(rad);
+      const y = cy + r * Math.sin(rad);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+  }
+
+  // Triangle 1 (up)
+  drawTriangle(cx, cy, r, true);
+  ctx.fillStyle = badgeColor;
+  ctx.fill();
+  ctx.strokeStyle = badgeBorder;
+  ctx.lineWidth = 4;
+  ctx.stroke();
+
+  // Triangle 2 (down)
+  drawTriangle(cx, cy, r, false);
+  ctx.fillStyle = badgeColor;
+  ctx.fill();
+  ctx.strokeStyle = badgeBorder;
+  ctx.lineWidth = 4;
+  ctx.stroke();
+
+  ctx.restore();
+
+  // Inner circle
+  ctx.beginPath();
+  ctx.arc(cx, cy, 48, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(255,255,255,0.85)';
+  ctx.fill();
+
+  // Symbol
+  ctx.font = '32px serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(badgeSymbol, cx, cy - 8);
+
+  // Name
+  const name = (document.getElementById('badgeName')?.value || '').trim();
+  if (name) {
+    ctx.font = 'bold 11px Heebo,sans-serif';
+    ctx.fillStyle = badgeBorder;
+    ctx.fillText(name.substring(0, 14), cx, cy + 26);
+  }
+
+  // Words on badge arms
+  ctx.font = 'bold 8.5px Heebo,sans-serif';
+  ctx.fillStyle = badgeBorder;
+  ctx.textAlign = 'center';
+  const positions = [
+    [cx, cy - r + 24],  // top
+    [cx, cy + r - 16],  // bottom
+  ];
+  badgeWords.forEach((w, i) => {
+    if (positions[i]) ctx.fillText(w, positions[i][0], positions[i][1]);
+  });
+
+  // Border ring
+  ctx.beginPath();
+  ctx.arc(cx, cy, 104, 0, Math.PI * 2);
+  ctx.strokeStyle = badgeBorder + '55';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+
+function saveBadge() {
+  const canvas = document.getElementById('badgeCanvas');
+  if (!canvas) return;
+  const link = document.createElement('a');
+  link.download = 'survivors_badge.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+  S.badgeSaved = true; SS();
+}
+
+function subBadgeComment() {
+  const txt = document.getElementById('badgeComment')?.value.trim();
+  if (!txt || txt.length < 10) { alert('כתבו לפחות משפט אחד! / Write at least one sentence!'); return; }
+  S.badgeComment = txt; S.badgeCommentDone = true; SS();
+  const res = document.getElementById('badgeComRes');
+  res.className = 'rbox show ok';
+  res.innerHTML = '✅ תגובתכם נשמרה! / Your comment was saved!';
+  document.querySelector('[data-tab="tab5"]').classList.add('done');
+}
+
+// Init badge canvas on tab load
+function initBadgeCanvas() {
+  const canvas = document.getElementById('badgeCanvas');
+  if (canvas && canvas.getContext) {
+    renderBadge();
+    if (S.badgeComment) {
+      const ta = document.getElementById('badgeComment');
+      if (ta) ta.value = S.badgeComment;
+    }
+  }
+}
+
+// ============= RESTORE =============
+function restore(){
+  refreshUI();
+  if(S.timerDone){showPh('ph-select');buildCL();}
+  if(S.memFinal)showPh('ph-reflect');
+  if(S.p1Done){document.getElementById('ss1').classList.add('show');document.getElementById('ss1n').textContent=`${S.p1Score}/19`;document.querySelector('[data-tab="tab1"]').classList.add('done');}
+  if(S.ratingVal)document.querySelectorAll('.rbtn').forEach(b=>b.classList.toggle('sel',parseInt(b.dataset.r)===S.ratingVal));
+  if(S.ratingDone)document.querySelectorAll('.rbtn').forEach(b=>b.disabled=true);
+  if(S.gmDone)document.querySelectorAll('#gmOpts .oi').forEach(o=>o.style.pointerEvents='none');
+  if(S.helpDone)document.querySelectorAll('#helpOpts .oi').forEach(o=>o.style.pointerEvents='none');
+  if(S.helpSel.length)S.helpSel.forEach(v=>{const els=document.querySelectorAll('#helpOpts .oi');els.forEach(el=>{if(el.getAttribute('onclick')&&el.getAttribute('onclick').includes(`'${v}'`))el.classList.add('sel');});});
+  atag('mAttempt',S.memAttempts,2);atag('r1A',S.ratingAttempts,2);atag('r2A',S.gmAttempts,2);atag('r5A',S.helpAttempts,2);
+  if(S.p4Done){document.getElementById('ss4').classList.add('show');document.getElementById('ss4n').textContent=`${S.p4Score}/21`;document.querySelector('[data-tab="tab4"]').classList.add('done');}
+}
+LS();restore();
+</script>
+</body>
+</html>
+.btn-p{background:var(--blue);color:white;} .btn-p:hover{background:#1d4ed8;transform:translateY(-1px);}
+.btn-s{background:var(--green);color:white;}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important;}
+.atag{display:inline-block;background:var(--gold-light);color:#92400e;font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+.rbox{border-radius:12px;padding:14px 18px;margin-top:12px;font-weight:600;font-size:.91rem;line-height:1.6;display:none;}
+.rbox.show{display:block;animation:fadeIn .3s;}
+.rbox.ok{background:var(--green-light);border:2px solid var(--green);color:#14532d;}
+.rbox.warn{background:var(--gold-light);border:2px solid var(--gold);color:#78350f;}
+.rbox.err{background:var(--red-light);border:2px solid var(--red);color:#7f1d1d;}
+.ssbox{background:linear-gradient(135deg,var(--dark),#2d3748);color:white;border-radius:var(--radius);padding:24px;text-align:center;margin-top:22px;display:none;}
+.ssbox.show{display:block;animation:fadeIn .5s;}
+.ssbig{font-family:'Fredoka One',cursive;font-size:3rem;color:#fbbf24;}
+/* Part1 */
+.tdisp{font-family:'Fredoka One',cursive;font-size:3rem;color:var(--blue);text-align:center;margin:12px 0;transition:color .3s;}
+.tdisp.urgent{color:var(--red);animation:blink .5s infinite;}
+@keyframes blink{50%{opacity:.5}}
+.igrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0;}
+.iemoji{background:var(--blue-light);border-radius:10px;padding:12px 6px;text-align:center;font-size:1.7rem;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.iemoji span{font-size:.67rem;color:var(--gray);font-weight:600;}
+.clist{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0;}
+.ci{display:flex;align-items:center;gap:10px;padding:9px 13px;border:2px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;font-size:.88rem;user-select:none;}
+.ci:hover{border-color:var(--blue);background:var(--blue-light);}
+.ci .bx{width:20px;height:20px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;}
+.ci.sel{border-color:var(--blue);background:var(--blue-light);}.ci.sel .bx{background:var(--blue);border-color:var(--blue);color:white;}
+.ci.ok2{border-color:var(--green)!important;background:var(--green-light)!important;}.ci.ok2 .bx{background:var(--green);border-color:var(--green);color:white;}
+.ci.no2{border-color:var(--red)!important;background:var(--red-light)!important;}.ci.no2 .bx{background:var(--red);border-color:var(--red);color:white;}
+.ci.miss{border-color:var(--gold)!important;background:var(--gold-light)!important;}
+.rrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0;}
+.rlbl{font-size:.85rem;color:var(--gray);font-weight:600;}
+.rbtn{width:42px;height:42px;border-radius:50%;border:2px solid var(--border);background:white;font-weight:700;font-size:.93rem;cursor:pointer;transition:all .2s;font-family:'Heebo',sans-serif;}
+.rbtn:hover{border-color:var(--blue);background:var(--blue-light);}
+.rbtn.sel{background:var(--blue);border-color:var(--blue);color:white;}
+.olist{display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+.oi{display:flex;align-items:center;gap:12px;padding:11px 16px;border:2px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;font-size:.92rem;user-select:none;}
+.oi:hover,.oi.sel{border-color:var(--blue);background:var(--blue-light);}
+.rdot{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.oi.sel .rdot{background:var(--blue);border-color:var(--blue);}
+.tinp{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:10px;font-family:'Heebo',sans-serif;font-size:.92rem;direction:rtl;transition:border-color .2s;margin-bottom:10px;background:white;}
+.tinp:focus{outline:none;border-color:var(--blue);}
+.phase{display:none;} .phase.active{display:block;}
+/* Part2 */
+.dlg{background:#f8faff;border:1px solid var(--border);border-radius:12px;padding:18px 22px;line-height:2;font-size:.92rem;}
+.ss{color:#1d4ed8;font-weight:700;} .si{color:#0891b2;font-weight:700;}
+.hw{cursor:pointer;border-radius:4px;padding:1px 3px;transition:background .2s;}
+.hw:hover{background:#fef9c3;} .hw.hperson{background:#bfdbfe;} .hw.hplace{background:#bbf7d0;}
+.cop{display:flex;align-items:center;gap:12px;padding:11px 16px;border:2px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;font-size:.9rem;margin-bottom:8px;user-select:none;}
+.cop:hover,.cop.sel{border-color:var(--blue);background:var(--blue-light);}
+.cop.ok2{border-color:var(--green)!important;background:var(--green-light)!important;}
+.cop.no2{border-color:var(--red)!important;background:var(--red-light)!important;}
+.cbx{width:20px;height:20px;border:2px solid var(--border);border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.cop.sel .cbx{background:var(--blue);border-color:var(--blue);color:white;}
+.cop.ok2 .cbx{background:var(--green);border-color:var(--green);color:white;}
+.cop.no2 .cbx{background:var(--red);border-color:var(--red);color:white;}
+.vhl{background:#bfdbfe;border-radius:4px;padding:1px 4px;font-weight:600;}
+.mtbl{width:100%;border-collapse:collapse;margin:12px 0;}
+.mtbl th{background:var(--dark);color:white;padding:9px 14px;text-align:right;font-size:.85rem;font-weight:600;}
+.mtbl td{padding:7px 14px;border-bottom:1px solid var(--border);font-size:.87rem;vertical-align:middle;}
+.mtbl tr:nth-child(even) td{background:#f9fafb;}
+.msel{padding:5px 8px;border:2px solid var(--border);border-radius:8px;font-family:'Heebo',sans-serif;font-size:.85rem;background:white;cursor:pointer;direction:rtl;min-width:130px;}
+.msel:focus{outline:none;border-color:var(--blue);}
+.msel.ok2{border-color:var(--green);background:var(--green-light);}
+.msel.no2{border-color:var(--red);background:var(--red-light);}
+.msel:disabled{opacity:.85;cursor:default;}
+.vnum{display:inline-block;background:var(--blue);color:white;width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:700;text-align:center;line-height:22px;margin-left:4px;}
+/* Part3 */
+.lcard{border:2px solid var(--border);border-radius:10px;padding:9px 12px;cursor:pointer;transition:all .2s;font-size:.85rem;font-weight:600;background:white;display:flex;align-items:center;gap:6px;}
+.lcard:hover,.lcard.sel{border-color:var(--blue);background:var(--blue-light);}
+.lcard.mok{border-color:var(--green);background:var(--green-light);cursor:default;}
+.lcard.mno{border-color:var(--red);background:var(--red-light);}
+.icard{border:3px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;text-align:center;padding:5px 4px;background:white;}
+.icard:hover,.icard.sel{border-color:var(--blue);transform:scale(1.03);}
 .icard.mok{border-color:var(--green);background:var(--green-light);cursor:default;}
 .icard.mno{border-color:var(--red);background:var(--red-light);}
 .icard img{width:100%;height:72px;object-fit:cover;border-radius:5px;}
